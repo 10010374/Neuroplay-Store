@@ -324,14 +324,65 @@
   }
   .whatsapp-btn:hover { transform: scale(1.05); }
 
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
+  /* TABLET */
+  @media (max-width: 900px) {
     .nav-links { display: none; }
-    .hero { padding: 2.5rem 1.5rem; }
-    .hero h1 { font-size: 2.2rem; }
-    .hero-visual { width: 220px; }
-    .stats-bar { gap: 1.5rem; }
-    .section { padding: 2.5rem 1.5rem; }
+    .hero { flex-direction: column; text-align: center; padding: 3rem 1.5rem; gap: 2rem; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { width: 240px; margin: 0 auto; }
+    .stats-bar { gap: 1.5rem; padding: 1rem; }
+    .products { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    .promo-banner { flex-direction: column; text-align: center; }
+    .testimonials { grid-template-columns: 1fr; }
+  }
+
+  /* MÓVIL */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; height: 60px; }
+    .logo { font-size: 1.4rem; }
+    .btn-cart { padding: 6px 14px; font-size: 0.8rem; }
+    .hero { padding: 2rem 1rem; gap: 1.5rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero p { font-size: 0.95rem; }
+    .hero-badge { font-size: 0.72rem; }
+    .hero-visual { width: 190px; gap: 8px; }
+    .toy-card { padding: 0.7rem; }
+    .toy-card .toy-emoji { font-size: 2rem; }
+    .hero-btns { flex-direction: column; gap: 0.7rem; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 12px; }
+    .stats-bar { gap: 1rem; padding: 1rem 0.5rem; }
+    .stat-num { font-size: 1.3rem; }
+    .stat-label { font-size: 0.72rem; }
+    .section { padding: 2rem 1rem; }
+    .section-title { font-size: 1.6rem; }
+    .search-bar { flex-direction: column; max-width: 100%; }
+    .search-bar input, .search-bar button { width: 100%; border-radius: 50px; }
+    .cats { gap: 8px; }
+    .cat-pill { padding: 6px 12px; font-size: 0.78rem; }
+    .products { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .product-img { height: 120px; font-size: 3rem; }
+    .product-info { padding: 0.7rem; }
+    .product-name { font-size: 0.82rem; }
+    .product-desc { font-size: 0.72rem; display: none; }
+    .product-price { font-size: 1.1rem; }
+    .btn-add { width: 30px; height: 30px; font-size: 1rem; }
+    .promo-banner { padding: 1.5rem; border-radius: 14px; }
+    .promo-banner h2 { font-size: 1.4rem; }
+    .age-guide { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .age-card { padding: 1rem; }
+    .age-card h4 { font-size: 1rem; }
+    .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .benefit-card { padding: 1rem; }
+    .benefit-icon { font-size: 2rem; }
+    .newsletter { padding: 1.5rem 1rem; }
+    .nl-form { flex-direction: column; }
+    .nl-form input, .nl-form button { width: 100%; border-radius: 50px; }
+    footer { padding: 1.5rem 1rem; }
+    .footer-links { flex-direction: column; gap: 0.6rem; align-items: center; }
+    .whatsapp-btn { bottom: 16px; left: 16px; padding: 10px 16px; font-size: 0.82rem; }
+    .toast { left: 16px; right: 16px; bottom: 70px; justify-content: center; }
+    .modal { padding: 1.5rem; border-radius: 16px 16px 0 0; max-height: 90vh; }
+    .modal-overlay.open { align-items: flex-end; }
   }
 </style>
 </head>
@@ -486,7 +537,7 @@
     <a href="#">Términos y condiciones</a>
     <a href="#">Política de privacidad</a>
     <a href="#">Devoluciones</a>
-    <a href="mailto:hola@neuroplay.store">hola@neuroplay.store</a>
+    <a href="mailto:storeneuroplay@gmail.com">storeneuroplay@gmail.com</a>
     <a href="https://neuroplay.store">neuroplay.store</a>
   </div>
   <p style="color:#555; font-size:0.8rem">© 2025 Neuro Play · Hecho con ❤️ en Perú · Todos los derechos reservados</p>
@@ -671,7 +722,7 @@
     if (!email || !email.includes('@')) { alert('Por favor ingresa un correo válido'); return; }
     // =========================================================
     // AQUÍ CONECTAS TU SERVICIO DE EMAIL MARKETING
-    // Opciones: Mailchimp, Brevo (Sendinblue), ActiveCampaign
+    // Envía el email a: storeneuroplay@gmail.com
     // =========================================================
     showToast('🎉 ¡Suscripción exitosa!');
     document.getElementById('nl-email').value = '';
@@ -687,3 +738,4 @@
 </script>
 </body>
 </html>
+
