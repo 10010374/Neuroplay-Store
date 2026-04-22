@@ -157,9 +157,10 @@
     font-size: 4rem; position: relative;
   }
   .badge {
-    position: absolute; top: 12px; left: 12px;
+    position: absolute; top: 10px; left: 10px; z-index: 3;
     background: var(--green); color: #fff; font-size: 0.7rem;
-    font-weight: 800; border-radius: 50px; padding: 3px 10px;
+    font-weight: 800; border-radius: 50px; padding: 4px 10px;
+    pointer-events: none;
   }
   .badge.hot { background: var(--primary); }
   .badge.new { background: var(--purple); }
@@ -389,9 +390,9 @@
     .search-bar input, .search-bar button { width: 100%; border-radius: 50px; }
     .cats { gap: 8px; }
     .cat-pill { padding: 6px 12px; font-size: 0.78rem; }
-    .products { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-    .product-img { height: 150px; font-size: 3rem; }
-    .product-info { padding: 0.7rem; }
+    .products { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .product-img { height: 170px; font-size: 3rem; }
+    .product-info { padding: 0.8rem; }
     .product-name { font-size: 0.82rem; }
     .product-desc { font-size: 0.72rem; display: none; }
     .product-price { font-size: 1.1rem; }
@@ -691,9 +692,9 @@
     grid.innerHTML = filtered.map(p => `
       <div class="product-card" id="pc-${p.id}">
         <div class="product-img" style="background:${getBg(p.cat)}; position:relative; overflow:hidden;">
-          ${p.badge ? `<span class="badge ${p.badge === 'hot' ? 'hot' : 'new'}">${p.badge === 'hot' ? '🔥 Popular' : '🆕 Nuevo'}</span>` : ''}
+          ${p.badge ? `<span class="badge ${p.badge === 'hot' ? 'hot' : 'new'}" style="z-index:2;">${p.badge === 'hot' ? '🔥 Popular' : '🆕 Nuevo'}</span>` : ''}
           ${p.img
-            ? `<img src="${p.img}" alt="${p.name}" style="width:100%; height:100%; object-fit:contain; object-position:center; padding:8px; display:block;">`
+            ? `<img src="${p.img}" alt="${p.name}" style="width:92%; height:92%; object-fit:contain; object-position:center; display:block; margin-top:18px;">`
             : `<span style="font-size:4rem;">${p.emoji}</span>`}
         </div>
         <div class="product-info">
@@ -871,6 +872,4 @@
 </script>
 </body>
 </html>
- 
-
-
+  
