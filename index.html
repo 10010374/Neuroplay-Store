@@ -71,44 +71,41 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 .search-bar button { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 20px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; }
 
 /* PRODUCTS */
-.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
-.product-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; align-items: stretch; }
+.product-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column; }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-.product-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+.product-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; flex-shrink: 0; }
 .badge { position: absolute; top: 10px; left: 10px; z-index: 3; color: #fff; font-size: 0.7rem; font-weight: 800; border-radius: 50px; padding: 4px 10px; }
 .badge.hot { background: var(--primary); }
 .badge.new { background: var(--purple); }
-.product-info { padding: 1rem; }
+.product-info { padding: 1rem; display: flex; flex-direction: column; flex: 1; }
 .product-ages { font-size: 0.72rem; font-weight: 700; color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .product-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 6px; line-height: 1.3; }
-.product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
-.product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; flex: 1; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
 .product-price { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--primary); }
 .product-price small { font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-decoration: line-through; display: block; line-height: 1; }
 .btn-detail { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 8px 16px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
 .btn-detail:hover { background: var(--primary-dark); }
 
 /* MODAL DETALLE */
-.detail-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 1rem; }
+.detail-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
 .detail-overlay.open { display: flex; }
-.detail-box { background: #fff; border-radius: 24px; max-width: 820px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-.detail-close { position: absolute; top: 1rem; right: 1rem; background: #f0f0f0; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; z-index: 10; display: flex; align-items: center; justify-content: center; }
-.detail-close:hover { background: #ddd; }
-.detail-content { display: grid; grid-template-columns: 1fr 1fr; }
+.detail-box { background: #fff; border-radius: 24px; max-width: 820px; width: 100%; position: relative; margin: auto; }
+.detail-close { position: fixed; top: 1rem; right: 1rem; background: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; z-index: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.detail-close:hover { background: #f0f0f0; }
+.detail-content { display: grid; grid-template-columns: 1fr 1fr; border-radius: 24px; overflow: hidden; }
 
 /* GALERÍA */
-.dm-gallery { background: #F5F5F5; border-radius: 24px 0 0 24px; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+.dm-gallery { background: #F5F5F5; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
 .dm-main-img { position: relative; height: 280px; background: #fff; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-.dm-main-img img { max-width: 100%; max-height: 100%; object-fit: contain; padding: 8px; }
-.dm-arr { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 1.3rem; font-weight: bold; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-.dm-prev { left: 8px; }
-.dm-next { right: 8px; }
+.dm-main-img img { max-width: 100%; max-height: 100%; object-fit: contain; padding: 8px; cursor: default; }
 .dm-thumbs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .dm-thumb { width: 64px; height: 64px; object-fit: contain; border-radius: 10px; border: 2px solid #E8E8E8; cursor: pointer; background: #fff; padding: 4px; transition: border-color 0.2s; }
 .dm-thumb-on, .dm-thumb:hover { border-color: var(--primary); }
 
 /* INFO DETALLE */
-.dm-info { padding: 1.8rem; display: flex; flex-direction: column; gap: 1rem; }
+.dm-info { padding: 1.8rem; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; max-height: 90vh; }
 .dm-name { font-family: 'Fredoka One', cursive; font-size: 1.6rem; line-height: 1.2; }
 .dm-meta { display: flex; gap: 8px; flex-wrap: wrap; }
 .dm-meta span { background: #F0F0F0; border-radius: 50px; padding: 5px 12px; font-size: 0.8rem; font-weight: 700; }
@@ -117,10 +114,8 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 .dm-price-row { display: flex; align-items: center; gap: 10px; }
 .dm-orig { font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; }
 .dm-price { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--primary); }
-.dm-btns { display: flex; flex-direction: column; gap: 8px; }
-.dm-btns .btn-primary { text-align: center; }
-.btn-mp { background: #009EE3; color: #fff; border: none; border-radius: 50px; padding: 12px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; width: 100%; transition: background 0.2s; }
-.btn-mp:hover { background: #0080BA; }
+.dm-btns { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.dm-btns .btn-primary { text-align: center; width: 100%; padding: 14px; font-size: 1rem; }
 
 /* PROMO */
 .promo-banner { background: linear-gradient(135deg, var(--purple), #6B3FA0); color: #fff; border-radius: 20px; padding: 2.5rem; margin: 1rem 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
@@ -225,6 +220,7 @@ footer a { color: var(--accent); text-decoration: none; }
   .hero-visual { width: 240px; margin: 0 auto; }
   .detail-content { grid-template-columns: 1fr; }
   .dm-gallery { border-radius: 24px 24px 0 0; }
+  .dm-info { max-height: none; }
 }
 
 /* MÓVIL */
@@ -249,7 +245,7 @@ footer a { color: var(--accent); text-decoration: none; }
   .product-name { font-size: 0.82rem; }
   .product-desc { display: none; }
   .product-price { font-size: 1.1rem; }
-  .btn-detail { padding: 6px 10px; font-size: 0.75rem; }
+  .btn-detail { padding: 7px 10px; font-size: 0.75rem; }
   .promo-banner { flex-direction: column; text-align: center; padding: 1.5rem; }
   .age-guide { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
   .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
@@ -262,11 +258,15 @@ footer a { color: var(--accent); text-decoration: none; }
   .toast { left: 16px; right: 16px; bottom: 70px; }
   .modal { padding: 1.5rem; border-radius: 16px 16px 0 0; max-height: 90vh; }
   .modal-overlay.open { align-items: flex-end; }
-  .detail-box { border-radius: 20px 20px 0 0; max-height: 95vh; }
-  .detail-overlay.open { align-items: flex-end; padding: 0; }
-  .dm-main-img { height: 200px; }
-  .dm-info { padding: 1.2rem; }
-  .dm-name { font-size: 1.3rem; }
+  .detail-overlay { padding: 0.5rem; align-items: center; }
+  .detail-box { border-radius: 20px; max-height: 92vh; overflow-y: auto; }
+  .detail-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; font-size: 1rem; }
+  .dm-gallery { padding: 1rem; border-radius: 20px 20px 0 0; }
+  .dm-main-img { height: 180px; }
+  .dm-thumb { width: 50px; height: 50px; }
+  .dm-info { padding: 1rem; gap: 0.8rem; }
+  .dm-name { font-size: 1.2rem; }
+  .dm-price { font-size: 1.6rem; }
 }
 </style>
 </head>
@@ -650,7 +650,6 @@ footer a { color: var(--accent); text-decoration: none; }
     var gal = '<div class="dm-gallery">';
     if (hasImgs) {
       gal += '<div class="dm-main-img"><img src="'+p.imgs[0]+'" id="dm-main-img" alt="'+p.name+'">'
-           + (total>1 ? '<button class="dm-arr dm-prev" onclick="dSlide(-1)">&#8249;</button><button class="dm-arr dm-next" onclick="dSlide(1)">&#8250;</button>' : '')
            + '</div>';
       if (total>1) {
         gal += '<div class="dm-thumbs">';
@@ -671,7 +670,6 @@ footer a { color: var(--accent); text-decoration: none; }
       +'<div class="dm-price-row">'+(p.orig?'<span class="dm-orig">S/ '+p.orig+'</span>':'')+'<span class="dm-price">S/ '+p.price+'</span></div>'
       +'<div class="dm-btns">'
       +'<button class="btn-primary" onclick="addFromDetail('+p.id+')">🛒 Agregar al carrito</button>'
-      +(p.mpLink?'<button class="btn-mp" onclick="window.open(\''+p.mpLink+'\',\'_blank\')">Pagar con Mercado Pago →</button>':'')
       +'</div></div>';
 
     document.getElementById('detail-body').innerHTML = gal + info;
