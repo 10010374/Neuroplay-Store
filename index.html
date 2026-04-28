@@ -3,439 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neuro Play - Juegos Didácticos</title>
+<title>Neuro Play - Juegos Terapéuticos</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --primary: #FF6B35;
-    --primary-light: #FF8C5A;
-    --primary-dark: #E04E18;
-    --accent: #4ECDC4;
-    --accent-dark: #38B2AA;
-    --purple: #9B5DE5;
-    --yellow: #FFE66D;
-    --green: #06D6A0;
-    --bg: #FFFBF7;
-    --bg2: #FFF5EE;
-    --text: #2D2D2D;
-    --text-muted: #777;
-    --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    --radius: 16px;
-  }
-  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #FF6B35; --primary-dark: #E04E18;
+  --accent: #4ECDC4; --accent-dark: #38B2AA;
+  --purple: #9B5DE5; --yellow: #FFE66D;
+  --green: #06D6A0; --bg: #FFFBF7;
+  --text: #2D2D2D; --text-muted: #777;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08); --radius: 16px;
+}
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-  /* NAV */
-  nav {
-    background: #fff;
-    border-bottom: 2px solid #FDE8DC;
-    padding: 0 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 70px; position: sticky; top: 0; z-index: 100;
-  }
-  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .logo-icon { height: 44px; width: auto; object-fit: contain; }
-  .logo-text { display: flex; flex-direction: column; line-height: 1; }
-  .logo-name { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; line-height: 1; }
-  .logo-name .neuro { color: #1E90FF; }
-  .logo-name .play  { color: #FF5500; }
-  .logo-sub { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.52rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-top: 2px; }
-  @media (max-width: 600px) {
-    .logo-icon { height: 34px; }
-    .logo-name { font-size: 1.25rem; }
-    .logo-sub { font-size: 0.44rem; letter-spacing: 1.5px; }
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--primary); }
-  .nav-actions { display: flex; align-items: center; gap: 1rem; }
-  .btn-cart {
-    background: var(--primary); color: #fff; border: none; border-radius: 50px;
-    padding: 8px 20px; font-family: 'Nunito', sans-serif; font-weight: 700;
-    font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-cart:hover { background: var(--primary-dark); transform: translateY(-1px); }
-  .cart-count {
-    background: var(--yellow); color: var(--text); border-radius: 50%;
-    width: 20px; height: 20px; font-size: 0.75rem; font-weight: 900;
-    display: flex; align-items: center; justify-content: center;
-  }
+/* NAV */
+nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; }
+.logo-name { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; }
+.logo-name .neuro { color: #1E90FF; }
+.logo-name .play { color: #FF5500; }
+.logo-sub { font-size: 0.52rem; letter-spacing: 2px; color: #888; text-transform: uppercase; display: block; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+.nav-links a:hover { color: var(--primary); }
+.btn-cart { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 8px 20px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.btn-cart:hover { background: var(--primary-dark); }
+.cart-count { background: var(--yellow); color: var(--text); border-radius: 50%; width: 20px; height: 20px; font-size: 0.75rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
 
-  /* HERO */
-  .hero {
-    background: linear-gradient(135deg, #FFF5EE 0%, #F0FFFE 100%);
-    padding: 4rem 2rem;
-    display: flex; align-items: center; justify-content: center;
-    gap: 3rem; flex-wrap: wrap; position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: -60px; right: -60px;
-    width: 300px; height: 300px; border-radius: 50%;
-    background: rgba(255,107,53,0.06);
-  }
-  .hero::after {
-    content: '';
-    position: absolute; bottom: -40px; left: -40px;
-    width: 200px; height: 200px; border-radius: 50%;
-    background: rgba(78,205,196,0.08);
-  }
-  .hero-text { max-width: 500px; }
-  .hero-badge {
-    display: inline-block; background: var(--yellow); color: var(--primary-dark);
-    font-weight: 800; font-size: 0.8rem; border-radius: 50px;
-    padding: 4px 14px; margin-bottom: 1rem; letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .hero h1 { font-family: 'Fredoka One', cursive; font-size: 3rem; line-height: 1.1; color: var(--text); margin-bottom: 1rem; }
-  .hero h1 em { font-style: normal; color: var(--primary); }
-  .hero p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--primary); color: #fff; border: none; border-radius: 50px;
-    padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800;
-    font-size: 1rem; cursor: pointer; transition: all 0.2s; text-decoration: none;
-  }
-  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-  .btn-secondary {
-    background: transparent; color: var(--primary); border: 2px solid var(--primary);
-    border-radius: 50px; padding: 12px 28px; font-family: 'Nunito', sans-serif;
-    font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--primary); color: #fff; }
-  .hero-visual {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    width: 280px; position: relative; z-index: 1;
-  }
-  .toy-card {
-    background: #fff; border-radius: var(--radius); padding: 1rem;
-    text-align: center; box-shadow: var(--card-shadow);
-    animation: float 3s ease-in-out infinite;
-  }
-  .toy-card:nth-child(2) { animation-delay: 0.5s; margin-top: 20px; }
-  .toy-card:nth-child(3) { animation-delay: 1s; margin-top: -10px; }
-  .toy-card:nth-child(4) { animation-delay: 1.5s; margin-top: 10px; }
-  .toy-card .toy-emoji { font-size: 2.5rem; display: block; margin-bottom: 4px; }
-  .toy-card p { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+/* HERO */
+.hero { background: linear-gradient(135deg, #FFF5EE 0%, #F0FFFE 100%); padding: 4rem 2rem; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; overflow: hidden; }
+.hero-text { max-width: 500px; }
+.hero-badge { display: inline-block; background: var(--yellow); color: var(--primary-dark); font-weight: 800; font-size: 0.8rem; border-radius: 50px; padding: 4px 14px; margin-bottom: 1rem; text-transform: uppercase; }
+.hero h1 { font-family: 'Fredoka One', cursive; font-size: 3rem; line-height: 1.1; margin-bottom: 1rem; }
+.hero h1 em { font-style: normal; color: var(--primary); }
+.hero p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); border-radius: 50px; padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { background: var(--primary); color: #fff; }
+.hero-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 280px; }
+.toy-card { background: #fff; border-radius: var(--radius); padding: 1rem; text-align: center; box-shadow: var(--shadow); animation: float 3s ease-in-out infinite; }
+.toy-card:nth-child(2){animation-delay:0.5s;margin-top:20px;}
+.toy-card:nth-child(3){animation-delay:1s;margin-top:-10px;}
+.toy-card:nth-child(4){animation-delay:1.5s;margin-top:10px;}
+.toy-card .toy-emoji { font-size: 2.5rem; display: block; margin-bottom: 4px; }
+.toy-card p { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-  /* STATS BAR */
-  .stats-bar {
-    background: var(--primary); color: #fff;
-    display: flex; justify-content: center; gap: 3rem; padding: 1.2rem 2rem;
-    flex-wrap: wrap;
-  }
-  .stat { text-align: center; }
-  .stat-num { font-family: 'Fredoka One', cursive; font-size: 1.6rem; }
-  .stat-label { font-size: 0.8rem; opacity: 0.85; }
+/* STATS */
+.stats-bar { background: var(--primary); color: #fff; display: flex; justify-content: center; gap: 3rem; padding: 1.2rem 2rem; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-num { font-family: 'Fredoka One', cursive; font-size: 1.6rem; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; }
 
-  /* SECTIONS */
-  .section { padding: 3.5rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .section-title { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 0.3rem; }
-  .section-title span { color: var(--primary); }
-  .section-sub { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
-  .cats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
-  .cat-pill {
-    border: 2px solid #E8E8E8; background: #fff; border-radius: 50px;
-    padding: 8px 18px; font-family: 'Nunito', sans-serif; font-weight: 700;
-    font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: var(--text);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .cat-pill:hover, .cat-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+/* SECTIONS */
+.section { padding: 3.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-title { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 0.3rem; }
+.section-title span { color: var(--primary); }
+.section-sub { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+.cats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.cat-pill { border: 2px solid #E8E8E8; background: #fff; border-radius: 50px; padding: 8px 18px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: var(--text); }
+.cat-pill:hover, .cat-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.search-bar { display: flex; gap: 8px; max-width: 500px; margin: 0 auto 2rem; }
+.search-bar input { flex: 1; border: 2px solid #E8E8E8; border-radius: 50px; padding: 10px 20px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+.search-bar input:focus { border-color: var(--primary); }
+.search-bar button { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 20px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; }
 
-  /* PRODUCTS GRID */
-  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
-  .product-card {
-    background: #fff; border-radius: var(--radius); overflow: hidden;
-    box-shadow: var(--card-shadow); transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-  }
-  .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-  .product-img {
-    height: 220px; display: flex; align-items: center; justify-content: center;
-    font-size: 4rem; position: relative;
-  }
-  .badge {
-    position: absolute; top: 10px; left: 10px; z-index: 3;
-    background: var(--green); color: #fff; font-size: 0.7rem;
-    font-weight: 800; border-radius: 50px; padding: 4px 10px;
-    pointer-events: none;
-  }
-  .badge.hot { background: var(--primary); }
-  .badge.new { background: var(--purple); }
-  .product-info { padding: 1rem; }
-  .product-ages {
-    font-size: 0.72rem; font-weight: 700; color: var(--accent-dark);
-    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
-  }
-  .product-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 6px; line-height: 1.3; }
-  .product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
-  .product-footer { display: flex; align-items: center; justify-content: space-between; }
-  .product-price { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--primary); }
-  .product-price small { font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-decoration: line-through; display: block; line-height: 1; }
-  .btn-add {
-    background: var(--primary); color: #fff; border: none; border-radius: 50px;
-    width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-add:hover { background: var(--primary-dark); transform: scale(1.1); }
-  .btn-add.added { background: var(--green); }
+/* PRODUCTS */
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
+.product-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+.product-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+.badge { position: absolute; top: 10px; left: 10px; z-index: 3; color: #fff; font-size: 0.7rem; font-weight: 800; border-radius: 50px; padding: 4px 10px; }
+.badge.hot { background: var(--primary); }
+.badge.new { background: var(--purple); }
+.product-info { padding: 1rem; }
+.product-ages { font-size: 0.72rem; font-weight: 700; color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.product-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 6px; line-height: 1.3; }
+.product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.product-price { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--primary); }
+.product-price small { font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-decoration: line-through; display: block; line-height: 1; }
+.btn-detail { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 8px 16px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+.btn-detail:hover { background: var(--primary-dark); }
 
-  /* CARRUSEL */
-  .ctrack { display:flex; height:100%; transition:transform 0.3s ease; }
-  .ctrack img { min-width:100%; }
-  .carrbtn { position:absolute; top:50%; transform:translateY(-50%); z-index:6; background:rgba(255,255,255,0.9); border:none; border-radius:50%; width:28px; height:28px; font-size:1.1rem; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
-  .cprev { left:6px; }
-  .cnext { right:6px; }
-  .cdots { position:absolute; bottom:6px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:6; }
-  .cdot { width:7px; height:7px; border-radius:50%; background:rgba(0,0,0,0.2); cursor:pointer; display:inline-block; transition:background 0.2s; }
-  .cdot-on { background:var(--primary); }
+/* MODAL DETALLE */
+.detail-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 1rem; }
+.detail-overlay.open { display: flex; }
+.detail-box { background: #fff; border-radius: 24px; max-width: 820px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+.detail-close { position: absolute; top: 1rem; right: 1rem; background: #f0f0f0; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; z-index: 10; display: flex; align-items: center; justify-content: center; }
+.detail-close:hover { background: #ddd; }
+.detail-content { display: grid; grid-template-columns: 1fr 1fr; }
 
-  /* PROMO BANNER */
-  .promo-banner {
-    background: linear-gradient(135deg, var(--purple), #6B3FA0);
-    color: #fff; border-radius: 20px; padding: 2.5rem; margin: 1rem 0;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .promo-banner h2 { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 0.5rem; }
-  .promo-banner p { opacity: 0.85; font-size: 0.95rem; }
-  .btn-promo {
-    background: var(--yellow); color: var(--text); border: none; border-radius: 50px;
-    padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800;
-    font-size: 0.95rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s;
-  }
-  .btn-promo:hover { transform: scale(1.04); }
+/* GALERÍA */
+.dm-gallery { background: #F5F5F5; border-radius: 24px 0 0 24px; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+.dm-main-img { position: relative; height: 280px; background: #fff; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.dm-main-img img { max-width: 100%; max-height: 100%; object-fit: contain; padding: 8px; }
+.dm-arr { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 1.3rem; font-weight: bold; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.dm-prev { left: 8px; }
+.dm-next { right: 8px; }
+.dm-thumbs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.dm-thumb { width: 64px; height: 64px; object-fit: contain; border-radius: 10px; border: 2px solid #E8E8E8; cursor: pointer; background: #fff; padding: 4px; transition: border-color 0.2s; }
+.dm-thumb-on, .dm-thumb:hover { border-color: var(--primary); }
 
-  /* BENEFITS */
-  .benefits { background: #fff; padding: 3rem 2rem; }
-  .benefits-inner { max-width: 1100px; margin: 0 auto; }
-  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-  .benefit-card { text-align: center; padding: 1.5rem; border-radius: var(--radius); background: var(--bg); }
-  .benefit-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
-  .benefit-card h4 { font-weight: 800; margin-bottom: 0.4rem; font-size: 0.95rem; }
-  .benefit-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+/* INFO DETALLE */
+.dm-info { padding: 1.8rem; display: flex; flex-direction: column; gap: 1rem; }
+.dm-name { font-family: 'Fredoka One', cursive; font-size: 1.6rem; line-height: 1.2; }
+.dm-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.dm-meta span { background: #F0F0F0; border-radius: 50px; padding: 5px 12px; font-size: 0.8rem; font-weight: 700; }
+.dm-section-title { font-weight: 800; font-size: 0.82rem; color: var(--primary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.dm-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+.dm-price-row { display: flex; align-items: center; gap: 10px; }
+.dm-orig { font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; }
+.dm-price { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--primary); }
+.dm-btns { display: flex; flex-direction: column; gap: 8px; }
+.dm-btns .btn-primary { text-align: center; }
+.btn-mp { background: #009EE3; color: #fff; border: none; border-radius: 50px; padding: 12px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; width: 100%; transition: background 0.2s; }
+.btn-mp:hover { background: #0080BA; }
 
-  /* AGE GUIDE */
-  .age-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
-  .age-card {
-    border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer;
-    transition: transform 0.2s; border: 2px solid transparent;
-  }
-  .age-card:hover { transform: translateY(-3px); border-color: currentColor; }
-  .age-card.orange { background: #FFF0E8; color: var(--primary); }
-  .age-card.teal { background: #E8FFFE; color: var(--accent-dark); }
-  .age-card.purple { background: #F3EAFF; color: var(--purple); }
-  .age-card.green { background: #E8FFF7; color: #0A9E73; }
-  .age-emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
-  .age-card h4 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 0.3rem; }
-  .age-card p { font-size: 0.78rem; opacity: 0.8; }
+/* PROMO */
+.promo-banner { background: linear-gradient(135deg, var(--purple), #6B3FA0); color: #fff; border-radius: 20px; padding: 2.5rem; margin: 1rem 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.promo-banner h2 { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 0.5rem; }
+.promo-banner p { opacity: 0.85; font-size: 0.95rem; }
+.btn-promo { background: var(--yellow); color: var(--text); border: none; border-radius: 50px; padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
 
-  /* TESTIMONIALS */
-  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-  .testi-card {
-    background: #fff; border-radius: var(--radius); padding: 1.5rem;
-    box-shadow: var(--card-shadow); border-left: 4px solid var(--primary);
-  }
-  .testi-stars { color: #f5a623; font-size: 0.9rem; margin-bottom: 0.8rem; }
-  .testi-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-style: italic; }
-  .testi-author { font-weight: 800; font-size: 0.85rem; color: var(--text); }
-  .testi-role { font-size: 0.75rem; color: var(--text-muted); }
+/* BENEFITS */
+.benefits { background: #fff; padding: 3rem 2rem; }
+.benefits-inner { max-width: 1100px; margin: 0 auto; }
+.benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.benefit-card { text-align: center; padding: 1.5rem; border-radius: var(--radius); background: var(--bg); }
+.benefit-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+.benefit-card h4 { font-weight: 800; margin-bottom: 0.4rem; font-size: 0.95rem; }
+.benefit-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
 
-  /* NEWSLETTER */
-  .newsletter {
-    background: linear-gradient(135deg, #FFF5EE, #EFF9F8);
-    border-radius: 20px; padding: 2.5rem; text-align: center; margin-top: 2rem;
-  }
-  .newsletter h3 { font-family: 'Fredoka One', cursive; font-size: 1.6rem; margin-bottom: 0.5rem; }
-  .newsletter p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
-  .nl-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
-  .nl-form input {
-    flex: 1; border: 2px solid #E8E8E8; border-radius: 50px;
-    padding: 10px 18px; font-family: 'Nunito', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.2s;
-  }
-  .nl-form input:focus { border-color: var(--primary); }
-  .nl-form button {
-    background: var(--primary); color: #fff; border: none; border-radius: 50px;
-    padding: 10px 22px; font-family: 'Nunito', sans-serif; font-weight: 800;
-    font-size: 0.9rem; cursor: pointer; transition: background 0.2s;
-  }
-  .nl-form button:hover { background: var(--primary-dark); }
+/* EDADES */
+.age-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
+.age-card { border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; }
+.age-card:hover { transform: translateY(-3px); border-color: currentColor; }
+.age-card.orange{background:#FFF0E8;color:var(--primary);}
+.age-card.teal{background:#E8FFFE;color:var(--accent-dark);}
+.age-card.purple{background:#F3EAFF;color:var(--purple);}
+.age-card.green{background:#E8FFF7;color:#0A9E73;}
+.age-emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+.age-card h4 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 0.3rem; }
+.age-card p { font-size: 0.78rem; opacity: 0.8; }
 
-  /* FOOTER */
-  footer {
-    background: #2D2D2D; color: #ccc; padding: 2rem;
-    text-align: center; font-size: 0.85rem;
-  }
-  footer .footer-logo { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem; }
-  footer a { color: var(--accent); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  footer .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }
+/* TESTIMONIOS */
+.testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.testi-card { background: #fff; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border-left: 4px solid var(--primary); }
+.testi-stars { color: #f5a623; margin-bottom: 0.8rem; }
+.testi-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-style: italic; }
+.testi-author { font-weight: 800; font-size: 0.85rem; }
+.testi-role { font-size: 0.75rem; color: var(--text-muted); }
 
-  /* CART TOAST */
-  .toast {
-    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
-    background: var(--green); color: #fff; border-radius: 12px;
-    padding: 12px 20px; font-weight: 700; font-size: 0.9rem;
-    display: flex; align-items: center; gap: 8px;
-    transform: translateY(80px); opacity: 0; transition: all 0.3s;
-    pointer-events: none;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
+/* NEWSLETTER */
+.newsletter { background: linear-gradient(135deg, #FFF5EE, #EFF9F8); border-radius: 20px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
+.newsletter h3 { font-family: 'Fredoka One', cursive; font-size: 1.6rem; margin-bottom: 0.5rem; }
+.newsletter p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.nl-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
+.nl-form input { flex: 1; border: 2px solid #E8E8E8; border-radius: 50px; padding: 10px 18px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; outline: none; }
+.nl-form input:focus { border-color: var(--primary); }
+.nl-form button { background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 10px 22px; font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer; }
 
-  /* MODAL */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
-    padding: 1rem;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: #fff; border-radius: 20px; padding: 2rem;
-    max-width: 420px; width: 100%; position: relative;
-    max-height: 80vh; overflow-y: auto;
-  }
-  .modal-close {
-    position: absolute; top: 1rem; right: 1rem; background: #f5f5f5;
-    border: none; width: 32px; height: 32px; border-radius: 50%;
-    cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
-  }
-  .modal h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 1.2rem; color: var(--primary); }
-  .cart-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
-  .cart-item-emoji { font-size: 2rem; }
-  .cart-item-info { flex: 1; }
-  .cart-item-name { font-weight: 700; font-size: 0.9rem; }
-  .cart-item-price { color: var(--primary); font-weight: 800; font-size: 0.95rem; }
-  .cart-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1rem; padding: 4px; }
-  .cart-remove:hover { color: #e53; }
-  .cart-total { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--text); margin-top: 1rem; text-align: right; }
-  .cart-empty { text-align: center; color: var(--text-muted); padding: 2rem 0; font-size: 0.9rem; }
-  .btn-checkout {
-    width: 100%; background: var(--primary); color: #fff; border: none;
-    border-radius: 50px; padding: 14px; font-family: 'Nunito', sans-serif;
-    font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 1rem;
-    transition: background 0.2s;
-  }
-  .btn-checkout:hover { background: var(--primary-dark); }
+/* CART MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 20px; padding: 2rem; max-width: 420px; width: 100%; position: relative; max-height: 80vh; overflow-y: auto; }
+.modal-close { position: absolute; top: 1rem; right: 1rem; background: #f5f5f5; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+.modal h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 1.2rem; color: var(--primary); }
+.cart-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.cart-item-emoji { min-width: 40px; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 700; font-size: 0.9rem; }
+.cart-item-price { color: var(--primary); font-weight: 800; font-size: 0.95rem; }
+.cart-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1rem; padding: 4px; }
+.cart-remove:hover { color: #e53; }
+.cart-total { font-family: 'Fredoka One', cursive; font-size: 1.3rem; margin-top: 1rem; text-align: right; }
+.cart-empty { text-align: center; color: var(--text-muted); padding: 2rem 0; }
+.btn-checkout { width: 100%; background: var(--primary); color: #fff; border: none; border-radius: 50px; padding: 14px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 1rem; }
+.btn-checkout:hover { background: var(--primary-dark); }
 
-  /* SEARCH BAR */
-  .search-bar { display: flex; gap: 8px; max-width: 500px; margin: 0 auto 2rem; }
-  .search-bar input {
-    flex: 1; border: 2px solid #E8E8E8; border-radius: 50px;
-    padding: 10px 20px; font-family: 'Nunito', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.2s;
-  }
-  .search-bar input:focus { border-color: var(--primary); }
-  .search-bar button {
-    background: var(--primary); color: #fff; border: none; border-radius: 50px;
-    padding: 10px 20px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer;
-  }
+/* PAYMENT MODAL */
+.payment-modal { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; }
+.payment-modal.open { display: flex; }
+.payment-box { background: #fff; border-radius: 20px; padding: 1.8rem; max-width: 400px; width: 100%; position: relative; text-align: center; }
+.payment-box h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 0.3rem; }
+.pay-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.pay-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+.pay-tab { flex: 1; padding: 10px; border: 2px solid #E8E8E8; border-radius: 12px; background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; color: var(--text); }
+.pay-tab.active { border-color: var(--primary); background: #FFF5EE; color: var(--primary); }
+.pay-panel { display: none; }
+.pay-panel.active { display: block; }
+.yape-qr-box { background: #F8F0FF; border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; }
+.yape-qr-box img { width: 160px; height: 160px; border-radius: 12px; border: 3px solid #7B2FBE; }
+.yape-number { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #7B2FBE; margin: 0.5rem 0 0.2rem; }
+.yape-name { font-size: 0.82rem; color: #7B2FBE; font-weight: 700; }
+.pay-total-box { background: #F8F8F8; border-radius: 12px; padding: 0.8rem; margin: 1rem 0; font-family: 'Fredoka One', cursive; font-size: 1.2rem; }
+.pay-instructions { font-size: 0.8rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+.btn-confirm-yape { background: #7B2FBE; color: #fff; border: none; border-radius: 50px; padding: 14px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; width: 100%; }
+.pay-close { position: absolute; top: 1rem; right: 1rem; background: #f5f5f5; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
 
-  /* MODAL DE PAGO */
-  .payment-modal { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; }
-  .payment-modal.open { display: flex; }
-  .payment-box { background: #fff; border-radius: 20px; padding: 1.8rem; max-width: 400px; width: 100%; position: relative; text-align: center; }
-  .payment-box h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--text); }
-  .payment-box .pay-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-  .pay-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
-  .pay-tab { flex: 1; padding: 10px; border: 2px solid #E8E8E8; border-radius: 12px; background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; color: var(--text); }
-  .pay-tab.active { border-color: var(--primary); background: #FFF5EE; color: var(--primary); }
-  .pay-panel { display: none; }
-  .pay-panel.active { display: block; }
-  .yape-qr-box { background: #F8F0FF; border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; }
-  .yape-qr-box img { width: 160px; height: 160px; border-radius: 12px; border: 3px solid #7B2FBE; }
-  .yape-number { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #7B2FBE; margin: 0.5rem 0 0.2rem; }
-  .yape-name { font-size: 0.82rem; color: #7B2FBE; font-weight: 700; }
-  .pay-total-box { background: #F8F8F8; border-radius: 12px; padding: 0.8rem; margin: 1rem 0; font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--text); }
-  .pay-instructions { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
-  .btn-mp { background: #009EE3; color: #fff; border: none; border-radius: 50px; padding: 14px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; width: 100%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-mp:hover { background: #0080BA; }
-  .btn-confirm-yape { background: #7B2FBE; color: #fff; border: none; border-radius: 50px; padding: 14px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; width: 100%; transition: background 0.2s; }
-  .btn-confirm-yape:hover { background: #5E1F9A; }
-  .pay-close { position: absolute; top: 1rem; right: 1rem; background: #f5f5f5; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
-  .whatsapp-btn {
-    position: fixed; bottom: 24px; left: 24px; z-index: 999;
-    background: #25D366; color: #fff; border: none; border-radius: 50px;
-    padding: 12px 20px; font-family: 'Nunito', sans-serif; font-weight: 800;
-    font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.2s;
-    text-decoration: none;
-  }
-  .whatsapp-btn:hover { transform: scale(1.05); }
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; z-index: 1000; background: var(--green); color: #fff; border-radius: 12px; padding: 12px 20px; font-weight: 700; font-size: 0.9rem; transform: translateY(80px); opacity: 0; transition: all 0.3s; pointer-events: none; }
+.toast.show { transform: translateY(0); opacity: 1; }
 
-  /* TABLET */
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .hero { flex-direction: column; text-align: center; padding: 3rem 1.5rem; gap: 2rem; }
-    .hero-btns { justify-content: center; }
-    .hero-visual { width: 240px; margin: 0 auto; }
-    .stats-bar { gap: 1.5rem; padding: 1rem; }
-    .products { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-    .promo-banner { flex-direction: column; text-align: center; }
-    .testimonials { grid-template-columns: 1fr; }
-  }
+/* WHATSAPP */
+.whatsapp-btn { position: fixed; bottom: 24px; left: 24px; z-index: 999; background: #25D366; color: #fff; border-radius: 50px; padding: 12px 20px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.2s; }
+.whatsapp-btn:hover { transform: scale(1.05); }
 
-  /* MÓVIL */
-  @media (max-width: 600px) {
-    nav { padding: 0 1rem; height: 60px; }
-    .logo { font-size: 1.4rem; }
-    .btn-cart { padding: 6px 14px; font-size: 0.8rem; }
-    .hero { padding: 2rem 1rem; gap: 1.5rem; }
-    .hero h1 { font-size: 1.8rem; }
-    .hero p { font-size: 0.95rem; }
-    .hero-badge { font-size: 0.72rem; }
-    .hero-visual { width: 190px; gap: 8px; }
-    .toy-card { padding: 0.7rem; }
-    .toy-card .toy-emoji { font-size: 2rem; }
-    .hero-btns { flex-direction: column; gap: 0.7rem; }
-    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 12px; }
-    .stats-bar { gap: 1rem; padding: 1rem 0.5rem; }
-    .stat-num { font-size: 1.3rem; }
-    .stat-label { font-size: 0.72rem; }
-    .section { padding: 2rem 1rem; }
-    .section-title { font-size: 1.6rem; }
-    .search-bar { flex-direction: column; max-width: 100%; }
-    .search-bar input, .search-bar button { width: 100%; border-radius: 50px; }
-    .cats { gap: 8px; }
-    .cat-pill { padding: 6px 12px; font-size: 0.78rem; }
-    .products { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .product-img { height: 170px; font-size: 3rem; }
-    .product-info { padding: 0.8rem; }
-    .product-name { font-size: 0.82rem; }
-    .product-desc { font-size: 0.72rem; display: none; }
-    .product-price { font-size: 1.1rem; }
-    .btn-add { width: 30px; height: 30px; font-size: 1rem; }
-    .promo-banner { padding: 1.5rem; border-radius: 14px; }
-    .promo-banner h2 { font-size: 1.4rem; }
-    .age-guide { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-    .age-card { padding: 1rem; }
-    .age-card h4 { font-size: 1rem; }
-    .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-    .benefit-card { padding: 1rem; }
-    .benefit-icon { font-size: 2rem; }
-    .newsletter { padding: 1.5rem 1rem; }
-    .nl-form { flex-direction: column; }
-    .nl-form input, .nl-form button { width: 100%; border-radius: 50px; }
-    footer { padding: 1.5rem 1rem; }
-    .footer-links { flex-direction: column; gap: 0.6rem; align-items: center; }
-    .whatsapp-btn { bottom: 16px; left: 16px; padding: 10px 16px; font-size: 0.82rem; }
-    .toast { left: 16px; right: 16px; bottom: 70px; justify-content: center; }
-    .modal { padding: 1.5rem; border-radius: 16px 16px 0 0; max-height: 90vh; }
-    .modal-overlay.open { align-items: flex-end; }
-  }
+/* FOOTER */
+footer { background: #2D2D2D; color: #ccc; padding: 2rem; text-align: center; font-size: 0.85rem; }
+footer a { color: var(--accent); text-decoration: none; }
+.footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }
+
+/* TABLET */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hero { flex-direction: column; text-align: center; padding: 3rem 1.5rem; gap: 2rem; }
+  .hero-btns { justify-content: center; }
+  .hero-visual { width: 240px; margin: 0 auto; }
+  .detail-content { grid-template-columns: 1fr; }
+  .dm-gallery { border-radius: 24px 24px 0 0; }
+}
+
+/* MÓVIL */
+@media (max-width: 600px) {
+  nav { padding: 0 1rem; height: 60px; }
+  .logo-name { font-size: 1.25rem; }
+  .btn-cart { padding: 6px 12px; font-size: 0.8rem; }
+  .hero { padding: 2rem 1rem; }
+  .hero h1 { font-size: 1.8rem; }
+  .hero-visual { width: 190px; gap: 8px; }
+  .hero-btns { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+  .stats-bar { gap: 1rem; padding: 1rem 0.5rem; }
+  .stat-num { font-size: 1.3rem; }
+  .section { padding: 2rem 1rem; }
+  .section-title { font-size: 1.6rem; }
+  .search-bar { flex-direction: column; }
+  .search-bar input, .search-bar button { width: 100%; border-radius: 50px; }
+  .products { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .product-img { height: 170px; font-size: 3rem; }
+  .product-info { padding: 0.8rem; }
+  .product-name { font-size: 0.82rem; }
+  .product-desc { display: none; }
+  .product-price { font-size: 1.1rem; }
+  .btn-detail { padding: 6px 10px; font-size: 0.75rem; }
+  .promo-banner { flex-direction: column; text-align: center; padding: 1.5rem; }
+  .age-guide { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .testimonials { grid-template-columns: 1fr; }
+  .nl-form { flex-direction: column; }
+  .nl-form input, .nl-form button { width: 100%; border-radius: 50px; }
+  footer { padding: 1.5rem 1rem; }
+  .footer-links { flex-direction: column; gap: 0.6rem; align-items: center; }
+  .whatsapp-btn { bottom: 16px; left: 16px; padding: 10px 14px; font-size: 0.82rem; }
+  .toast { left: 16px; right: 16px; bottom: 70px; }
+  .modal { padding: 1.5rem; border-radius: 16px 16px 0 0; max-height: 90vh; }
+  .modal-overlay.open { align-items: flex-end; }
+  .detail-box { border-radius: 20px 20px 0 0; max-height: 95vh; }
+  .detail-overlay.open { align-items: flex-end; padding: 0; }
+  .dm-main-img { height: 200px; }
+  .dm-info { padding: 1.2rem; }
+  .dm-name { font-size: 1.3rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- BARRA DE NAVEGACIÓN -->
+<!-- NAV -->
 <nav>
-  <div class="logo">
-    <div class="logo-text">
-      <span class="logo-name"><span class="neuro">Neuro</span><span class="play">Play</span></span>
-      <span class="logo-sub">— Juegos Terapéuticos —</span>
-    </div>
+  <div>
+    <div class="logo-name"><span class="neuro">Neuro</span><span class="play">Play</span></div>
+    <span class="logo-sub">— Juegos Terapéuticos —</span>
   </div>
   <ul class="nav-links">
     <li><a href="#productos">Productos</a></li>
@@ -443,19 +284,15 @@
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
-  <div class="nav-actions">
-    <button class="btn-cart" onclick="openCart()">
-      🛒 Carrito <span class="cart-count" id="cart-count">0</span>
-    </button>
-  </div>
+  <button class="btn-cart" onclick="openCart()">🛒 Carrito <span class="cart-count" id="cart-count">0</span></button>
 </nav>
 
-<!-- HERO PRINCIPAL -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-text">
     <span class="hero-badge">✨ Aprender jugando</span>
     <h1>Juguetes que <em>estimulan</em> la mente de tus hijos</h1>
-    <p>En Neuro Play encontrarás juegos didácticos cuidadosamente seleccionados para desarrollar habilidades cognitivas, creatividad y trabajo en equipo desde temprana edad.</p>
+    <p>En Neuro Play encontrarás juegos terapéuticos para desarrollar habilidades cognitivas, creatividad y trabajo en equipo desde temprana edad.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver catálogo 🎮</button>
       <button class="btn-secondary" onclick="document.getElementById('edades').scrollIntoView({behavior:'smooth'})">Guía por edad</button>
@@ -469,7 +306,7 @@
   </div>
 </section>
 
-<!-- BARRA DE ESTADÍSTICAS -->
+<!-- STATS -->
 <div class="stats-bar">
   <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Productos</div></div>
   <div class="stat"><div class="stat-num">3,800+</div><div class="stat-label">Familias felices</div></div>
@@ -477,16 +314,14 @@
   <div class="stat"><div class="stat-num">48h</div><div class="stat-label">Envío Lima</div></div>
 </div>
 
-<!-- SECCIÓN PRODUCTOS -->
+<!-- PRODUCTOS -->
 <div class="section" id="productos">
   <h2 class="section-title">Nuestros <span>Juegos</span></h2>
-  <p class="section-sub">Selección especial para cada etapa de desarrollo</p>
-
+  <p class="section-sub">Toca "Ver más" para conocer todos los detalles, imágenes y agregar al carrito</p>
   <div class="search-bar">
-    <input type="text" id="search-input" placeholder="Buscar juego didáctico..." oninput="filterProducts()">
+    <input type="text" id="search-input" placeholder="Buscar juego..." oninput="filterProducts()">
     <button onclick="filterProducts()">Buscar</button>
   </div>
-
   <div class="cats">
     <button class="cat-pill active" onclick="filterCat('todos',this)">🎯 Todos</button>
     <button class="cat-pill" onclick="filterCat('logica',this)">🧩 Lógica</button>
@@ -496,11 +331,10 @@
     <button class="cat-pill" onclick="filterCat('matematicas',this)">🔢 Matemáticas</button>
     <button class="cat-pill" onclick="filterCat('motor',this)">🏃 Motor</button>
   </div>
-
   <div class="products" id="products-grid"></div>
 </div>
 
-<!-- BANNER PROMOCIONAL -->
+<!-- BANNER -->
 <div class="section" style="padding-top:0">
   <div class="promo-banner">
     <div>
@@ -511,7 +345,7 @@
   </div>
 </div>
 
-<!-- GUÍA POR EDAD -->
+<!-- EDADES -->
 <div class="section" id="edades">
   <h2 class="section-title">Elige por <span>Edad</span></h2>
   <p class="section-sub">Cada etapa tiene sus propios desafíos y aprendizajes</p>
@@ -544,21 +378,18 @@
   <div class="testimonials">
     <div class="testi-card">
       <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"Mi hija de 4 años no para de jugar con el kit de bloques lógicos. Ha mejorado muchísimo su concentración y ya está resolviendo patrones increíbles."</p>
-      <div class="testi-author">Claudia R.</div>
-      <div class="testi-role">Mamá, Miraflores - Lima</div>
+      <p class="testi-text">"Mi hija de 4 años no para de jugar con el kit de bloques lógicos. Ha mejorado muchísimo su concentración."</p>
+      <div class="testi-author">Claudia R.</div><div class="testi-role">Mamá, Miraflores - Lima</div>
     </div>
-    <div class="testi-card" style="border-left-color: var(--purple)">
+    <div class="testi-card" style="border-left-color:var(--purple)">
       <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"Excelente calidad y llegó muy bien embalado. El juego de ciencias fue un hit en el cumpleaños de mi hijo. ¡Lo recomiendo al 100%!"</p>
-      <div class="testi-author">Marco T.</div>
-      <div class="testi-role">Papá, San Isidro - Lima</div>
+      <p class="testi-text">"Excelente calidad y llegó muy bien embalado. El juego fue un hit en el cumpleaños de mi hijo."</p>
+      <div class="testi-author">Marco T.</div><div class="testi-role">Papá, San Isidro - Lima</div>
     </div>
-    <div class="testi-card" style="border-left-color: var(--accent)">
+    <div class="testi-card" style="border-left-color:var(--accent)">
       <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"Como maestra de inicial, siempre busco materiales de calidad. Neuro Play tiene lo que ninguna otra tienda en Perú ofrece: variedad + soporte pedagógico."</p>
-      <div class="testi-author">Ana Lucía V.</div>
-      <div class="testi-role">Docente, Surco - Lima</div>
+      <p class="testi-text">"Como maestra de inicial, Neuro Play tiene lo que ninguna otra tienda en Perú ofrece: variedad + soporte pedagógico."</p>
+      <div class="testi-author">Ana Lucía V.</div><div class="testi-role">Docente, Surco - Lima</div>
     </div>
   </div>
 </div>
@@ -577,13 +408,11 @@
 
 <!-- FOOTER -->
 <footer>
-  <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:0.8rem;">
-    <div style="line-height:1; text-align:center;">
-      <div style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.6rem;"><span style="color:#6BB8FF;">Neuro</span><span style="color:#FF875A;">Play</span></div>
-      <div style="font-size:0.5rem; letter-spacing:2px; color:#aaa; text-transform:uppercase; margin-top:2px;">— Juegos Terapéuticos —</div>
-    </div>
+  <div style="margin-bottom:0.8rem">
+    <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;"><span style="color:#6BB8FF;">Neuro</span><span style="color:#FF875A;">Play</span></div>
+    <div style="font-size:0.5rem;letter-spacing:2px;color:#aaa;text-transform:uppercase;margin-top:2px;">— Juegos Terapéuticos —</div>
   </div>
-  <p style="margin-bottom:0.5rem">Juegos didácticos que potencian el desarrollo infantil</p>
+  <p style="margin-bottom:0.5rem">Juegos terapéuticos que potencian el desarrollo infantil</p>
   <div class="footer-links">
     <a href="#">Términos y condiciones</a>
     <a href="#">Política de privacidad</a>
@@ -591,14 +420,19 @@
     <a href="mailto:storeneuroplay@gmail.com">storeneuroplay@gmail.com</a>
     <a href="https://neuroplay.store">neuroplay.store</a>
   </div>
-  <p style="color:#555; font-size:0.8rem">© 2025 Neuro Play · Hecho con ❤️ en Perú · Todos los derechos reservados</p>
+  <p style="color:#555;font-size:0.8rem">© 2025 Neuro Play · Hecho con ❤️ en Perú · Todos los derechos reservados</p>
 </footer>
 
-<!-- BOTÓN WHATSAPP FLOTANTE -->
-<!-- Cambia el número por el tuyo: 51 + tu número peruano -->
-<a class="whatsapp-btn" href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20juego%20de%20Neuro%20Play" target="_blank">
-  💬 WhatsApp
-</a>
+<!-- WHATSAPP -->
+<a class="whatsapp-btn" href="https://wa.me/51936710169?text=Hola%2C%20me%20interesa%20un%20juego%20de%20Neuro%20Play" target="_blank">💬 WhatsApp</a>
+
+<!-- MODAL DETALLE -->
+<div class="detail-overlay" id="detail-modal">
+  <div class="detail-box">
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+    <div class="detail-content" id="detail-body"></div>
+  </div>
+</div>
 
 <!-- MODAL CARRITO -->
 <div class="modal-overlay" id="cart-modal">
@@ -610,173 +444,177 @@
   </div>
 </div>
 
-<!-- MODAL DE MÉTODOS DE PAGO -->
+<!-- MODAL PAGO -->
 <div class="payment-modal" id="payment-modal">
   <div class="payment-box">
     <button class="pay-close" onclick="closePayment()">✕</button>
     <h3>💳 Elige cómo pagar</h3>
     <p class="pay-subtitle">Selecciona tu método de pago favorito</p>
-
     <div class="pay-tabs">
-      <button class="pay-tab active" onclick="switchTab('yape', this)">💜 Yape</button>
-      <button class="pay-tab" onclick="switchTab('mp', this)">🔵 Mercado Pago</button>
+      <button class="pay-tab active" onclick="switchTab('yape',this)">💜 Yape</button>
+      <button class="pay-tab" onclick="switchTab('mp',this)">🔵 Mercado Pago</button>
     </div>
-
-    <!-- PANEL YAPE -->
     <div class="pay-panel active" id="panel-yape">
       <div class="yape-qr-box">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=yape://936710169&bgcolor=F8F0FF&color=7B2FBE" alt="QR Yape Neuro Play">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=yape://936710169&bgcolor=F8F0FF&color=7B2FBE" alt="QR Yape">
         <div class="yape-number">936 710 169</div>
         <div class="yape-name">Neuro Play</div>
       </div>
-      <div class="pay-total-box" id="yape-total">Total a pagar: S/ 0</div>
-      <p class="pay-instructions">
-        1. Abre tu app de <strong>Yape</strong><br>
-        2. Escanea el QR o busca el número <strong>936 710 169</strong><br>
-        3. Envía el monto exacto con tu nombre en el mensaje<br>
-        4. Toca el botón de abajo para confirmar por WhatsApp
-      </p>
+      <div class="pay-total-box" id="yape-total">Total: S/ 0</div>
+      <p class="pay-instructions">1. Abre tu app de Yape<br>2. Escanea el QR o busca el número<br>3. Envía el monto exacto con tu nombre<br>4. Toca el botón para confirmar por WhatsApp</p>
       <button class="btn-confirm-yape" onclick="confirmYape()">✅ Ya yapé, confirmar pedido</button>
     </div>
-
-    <!-- PANEL MERCADO PAGO -->
     <div class="pay-panel" id="panel-mp">
-      <div style="background:#E8F6FF; border-radius:16px; padding:1.5rem; margin-bottom:1rem;">
-        <div style="font-size:3rem; margin-bottom:0.5rem;">🔵</div>
-        <div style="font-weight:800; font-size:1rem; color:#009EE3; margin-bottom:0.3rem;">Mercado Pago</div>
-        <div style="font-size:0.82rem; color:#555;">Paga con tarjeta, transferencia o saldo MP</div>
+      <div style="background:#E8F6FF;border-radius:16px;padding:1.5rem;margin-bottom:1rem;">
+        <div style="font-size:3rem;margin-bottom:0.5rem;">🔵</div>
+        <div style="font-weight:800;color:#009EE3;margin-bottom:0.3rem;">Mercado Pago</div>
+        <div style="font-size:0.82rem;color:#555;">Paga con tarjeta, transferencia o saldo MP</div>
       </div>
-      <div class="pay-total-box" id="mp-total">Total a pagar: S/ 0</div>
-      <p class="pay-instructions">
-        Al hacer clic serás redirigido a Mercado Pago para completar tu pago de forma segura. Acepta tarjetas de crédito, débito y más.
-      </p>
-      <button class="btn-mp" onclick="goToMP()">
-        Pagar con Mercado Pago →
-      </button>
-      <p style="font-size:0.72rem; color:#aaa; margin-top:0.8rem;">🔒 Pago 100% seguro con encriptación SSL</p>
+      <div class="pay-total-box" id="mp-total">Total: S/ 0</div>
+      <p class="pay-instructions">Serás redirigido a Mercado Pago para completar tu pago de forma segura.</p>
+      <button class="btn-mp" onclick="goToMP()">Pagar con Mercado Pago →</button>
     </div>
   </div>
 </div>
 
-
-<div class="toast" id="toast">✓ Agregado al carrito</div>
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Agregado</div>
 
 <script>
   // =========================================================
-  // CATÁLOGO DE PRODUCTOS
-  // Para agregar productos, agrega un objeto a este array.
-  // Campos: id, name, desc, price, orig (precio tachado o null),
-  //         emoji, ages, cat, badge ('hot' | 'new' | null)
-  // Categorías disponibles: logica, ciencias, arte, letras, matematicas, motor
+  // CATÁLOGO — Para agregar un producto nuevo copia uno de
+  // los objetos y edita sus campos. Campos disponibles:
+  // imgs: hasta 3 imágenes (se ven en el modal de detalle)
+  // skills: habilidades que desarrolla
+  // players: número de jugadores
+  // mpLink: link de pago de Mercado Pago (null si no tiene)
   // =========================================================
-  const products = [
-    { id:1, name:"Polilla Tramposa", desc:"¡Se pueden hacer trampas! El divertido juego de cartas donde engañar está permitido.", price:49, orig:null, imgs:["polilla_tramposa_sin_fondo.png","polilla_tramposa_2.png","polilla tramposa 3.png"], ages:"7+ años", cat:"logica", badge:"hot", mpLink:"https://mpago.la/2Hhxjro" },
-    { id:2, name:"Stacking Fun", desc:"¡Apila los platos antes que el tiempo acabe! Juego de habilidad y velocidad para toda la familia.", price:25, orig:null, imgs:["STACKING FUN 1.png","STACKING FUN 2.png","STACKING FUN 3.png"], ages:"3+ años", cat:"motor", badge:"new", mpLink:null },
-    { id:3, name:"Bloques Lógicos Premium", desc:"Desarrolla clasificación, seriación y lógica matemática", price:89, orig:120, imgs:[], emoji:"🟦", ages:"3-6 años", cat:"logica", badge:null, mpLink:null },
-    { id:4, name:"Kit Científico Explorador", desc:"30 experimentos caseros fáciles y seguros para niños", price:129, orig:160, imgs:[], emoji:"🔬", ages:"6-10 años", cat:"ciencias", badge:null, mpLink:null },
-    { id:5, name:"Rompecabezas 3D Mundo", desc:"Mapa mundi tridimensional con 200 piezas y colores vivos", price:75, orig:null, imgs:[], emoji:"🌍", ages:"5-9 años", cat:"logica", badge:null, mpLink:null },
-    { id:6, name:"Arte con Arcilla Mágica", desc:"Arcilla moldeable y segura en 12 colores brillantes", price:55, orig:70, imgs:[], emoji:"🎨", ages:"4-8 años", cat:"arte", badge:null, mpLink:null },
-    { id:7, name:"Abecedario Magnético Divertido", desc:"Letras y números magnéticos con tablero incluido", price:65, orig:null, imgs:[], emoji:"🔤", ages:"3-6 años", cat:"letras", badge:null, mpLink:null },
-    { id:8, name:"Dominó de Fracciones", desc:"Aprende fracciones jugando con fichas coloridas", price:49, orig:60, imgs:[], emoji:"🀱", ages:"7-12 años", cat:"matematicas", badge:null, mpLink:null },
-    { id:9, name:"Torre de Equilibrio Sensorial", desc:"Desarrolla concentración y motricidad fina", price:95, orig:null, imgs:[], emoji:"🏗️", ages:"2-5 años", cat:"motor", badge:null, mpLink:null },
-    { id:10, name:"Cuentos STEM para Niñas", desc:"6 libros ilustrados sobre mujeres en ciencias", price:110, orig:140, imgs:[], emoji:"📚", ages:"5-10 años", cat:"letras", badge:null, mpLink:null },
+  var products = [
+    {
+      id:1, name:"Polilla Tramposa",
+      desc:"Juego terapéutico de cartas donde ¡se pueden hacer trampas! Convierte el momento de juego en una oportunidad de aprendizaje. Recomendado para niños con TDAH, dificultades de atención o impulsividad.",
+      skills:"Atención · Autocontrol · Habilidades sociales · Tolerancia a la frustración",
+      ages:"7+ años", players:"2-5 jugadores",
+      price:49, orig:null,
+      imgs:["polilla_tramposa_sin_fondo.png","polilla_tramposa_2.png","polilla tramposa 3.png"],
+      cat:"logica", badge:"hot", mpLink:"https://mpago.la/2Hhxjro"
+    },
+    {
+      id:2, name:"Stacking Fun",
+      desc:"¡Apila los platos antes que el tiempo acabe! Juego de habilidad y velocidad para toda la familia. Incluye base giratoria, piezas de colores y reloj de arena.",
+      skills:"Motricidad fina · Velocidad de reacción · Coordinación ojo-mano · Concentración",
+      ages:"3+ años", players:"1-4 jugadores",
+      price:25, orig:null,
+      imgs:["STACKING FUN 1.png","STACKING FUN 2.png","STACKING FUN 3.png"],
+      cat:"motor", badge:"new", mpLink:null
+    },
+    {
+      id:3, name:"Bloques Lógicos Premium",
+      desc:"Desarrolla clasificación, seriación y lógica matemática con bloques de colores y formas variadas.",
+      skills:"Lógica · Clasificación · Pensamiento matemático · Creatividad",
+      ages:"3-6 años", players:"1-4 jugadores",
+      price:89, orig:120, imgs:[], emoji:"🟦",
+      cat:"logica", badge:null, mpLink:null
+    },
+    {
+      id:4, name:"Kit Científico Explorador",
+      desc:"30 experimentos caseros fáciles y seguros para despertar la curiosidad científica en los niños.",
+      skills:"Pensamiento científico · Observación · Experimentación · Creatividad",
+      ages:"6-10 años", players:"1-3 jugadores",
+      price:129, orig:160, imgs:[], emoji:"🔬",
+      cat:"ciencias", badge:null, mpLink:null
+    },
+    {
+      id:5, name:"Rompecabezas 3D Mundo",
+      desc:"Mapa mundi tridimensional con 200 piezas y colores vivos para aprender geografía jugando.",
+      skills:"Paciencia · Concentración · Geografía · Pensamiento espacial",
+      ages:"5-9 años", players:"1-4 jugadores",
+      price:75, orig:null, imgs:[], emoji:"🌍",
+      cat:"logica", badge:null, mpLink:null
+    },
+    {
+      id:6, name:"Arte con Arcilla Mágica",
+      desc:"Arcilla moldeable y segura en 12 colores brillantes para liberar la creatividad de los niños.",
+      skills:"Creatividad · Motricidad fina · Expresión artística · Imaginación",
+      ages:"4-8 años", players:"1+ jugadores",
+      price:55, orig:70, imgs:[], emoji:"🎨",
+      cat:"arte", badge:null, mpLink:null
+    },
+    {
+      id:7, name:"Abecedario Magnético",
+      desc:"Letras y números magnéticos con tablero incluido para aprender de forma divertida.",
+      skills:"Lectura · Escritura · Reconocimiento de letras · Matemáticas básicas",
+      ages:"3-6 años", players:"1-2 jugadores",
+      price:65, orig:null, imgs:[], emoji:"🔤",
+      cat:"letras", badge:null, mpLink:null
+    },
+    {
+      id:8, name:"Dominó de Fracciones",
+      desc:"Aprende fracciones jugando con fichas coloridas. Ideal para reforzar matemáticas de forma lúdica.",
+      skills:"Fracciones · Lógica matemática · Concentración · Estrategia",
+      ages:"7-12 años", players:"2-4 jugadores",
+      price:49, orig:60, imgs:[], emoji:"🀱",
+      cat:"matematicas", badge:null, mpLink:null
+    },
+    {
+      id:9, name:"Torre de Equilibrio",
+      desc:"Desarrolla concentración y motricidad fina apilando piezas sin que caiga la torre.",
+      skills:"Motricidad fina · Concentración · Paciencia · Coordinación",
+      ages:"2-5 años", players:"1-4 jugadores",
+      price:95, orig:null, imgs:[], emoji:"🏗️",
+      cat:"motor", badge:null, mpLink:null
+    },
+    {
+      id:10, name:"Cuentos STEM para Niñas",
+      desc:"6 libros ilustrados sobre mujeres en ciencias que inspiran a las futuras científicas.",
+      skills:"Lectura · Inspiración · Vocabulario científico · Valores",
+      ages:"5-10 años", players:"Individual",
+      price:110, orig:140, imgs:[], emoji:"📚",
+      cat:"letras", badge:null, mpLink:null
+    }
   ];
 
-  // Estado de cada carrusel: {productoId: indiceActual}
-  var carIdx = {};
+  var cart = [];
+  var currentCat = 'todos';
+  var searchQ = '';
 
   function getBg(cat) {
-    var map = { logica:'#FFF0E8', ciencias:'#E8F8FF', arte:'#FFF0F8', letras:'#F0F0FF', matematicas:'#EAFFF7', motor:'#FFF8E8' };
-    return map[cat] || '#F8F8F8';
+    var m = {logica:'#FFF0E8',ciencias:'#E8F8FF',arte:'#FFF0F8',letras:'#F0F0FF',matematicas:'#EAFFF7',motor:'#FFF8E8'};
+    return m[cat]||'#F8F8F8';
   }
-
-  function buildImgArea(p) {
-    if (p.imgs && p.imgs.length > 0) {
-      if (p.imgs.length === 1) {
-        return '<img src="' + p.imgs[0] + '" alt="' + p.name + '" style="width:92%;height:92%;object-fit:contain;margin-top:18px;">';
-      }
-      // Carrusel para 2 o más imágenes
-      var slides = p.imgs.map(function(src) {
-        return '<img src="' + src + '" alt="' + p.name + '" style="min-width:100%;height:100%;object-fit:contain;padding:8px;">';
-      }).join('');
-      var dots = p.imgs.map(function(_, i) {
-        return '<span class="cdot' + (i===0?' cdot-on':'') + '" onclick="goDot(' + p.id + ',' + i + ')"></span>';
-      }).join('');
-      return '<div class="ctrack" id="ct' + p.id + '">' + slides + '</div>'
-           + '<button class="carrbtn cprev" onclick="moveCarr(' + p.id + ',-1)">&#8249;</button>'
-           + '<button class="carrbtn cnext" onclick="moveCarr(' + p.id + ',1)">&#8250;</button>'
-           + '<div class="cdots" id="cd' + p.id + '">' + dots + '</div>';
-    }
-    return '<span style="font-size:4rem;">' + (p.emoji || '🎮') + '</span>';
-  }
-
-  function moveCarr(id, dir) {
-    var p = products.find(function(x){ return x.id===id; });
-    if (!p) return;
-    carIdx[id] = ((carIdx[id]||0) + dir + p.imgs.length) % p.imgs.length;
-    refreshCarr(id, p.imgs.length);
-  }
-
-  function goDot(id, i) {
-    carIdx[id] = i;
-    var p = products.find(function(x){ return x.id===id; });
-    if (p) refreshCarr(id, p.imgs.length);
-  }
-
-  function refreshCarr(id, total) {
-    var track = document.getElementById('ct' + id);
-    var dotsEl = document.getElementById('cd' + id);
-    if (track) track.style.transform = 'translateX(-' + (carIdx[id]*100) + '%)';
-    if (dotsEl) {
-      var dotList = dotsEl.querySelectorAll('.cdot');
-      dotList.forEach(function(d, i){ d.className = 'cdot' + (i===carIdx[id]?' cdot-on':''); });
-    }
-  }
-
-  function getProductThumb(item) {
-    var src = item.imgs && item.imgs.length > 0 ? item.imgs[0] : null;
-    return src ? '<img src="' + src + '" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#f5f5f5;">' : (item.emoji || '🎮');
-  }
-
-  let cart = [];
-  let currentCat = 'todos';
-  let searchQ = '';
 
   function renderProducts() {
     var grid = document.getElementById('products-grid');
-    var filtered = products.filter(function(p) {
-      var matchCat = currentCat === 'todos' || p.cat === currentCat;
-      var matchSearch = p.name.toLowerCase().includes(searchQ.toLowerCase()) || p.desc.toLowerCase().includes(searchQ.toLowerCase());
-      return matchCat && matchSearch;
+    var filtered = products.filter(function(p){
+      return (currentCat==='todos'||p.cat===currentCat) &&
+             (p.name.toLowerCase().includes(searchQ.toLowerCase())||p.desc.toLowerCase().includes(searchQ.toLowerCase()));
     });
-    if (!filtered.length) {
-      grid.innerHTML = '<p style="color:var(--text-muted);padding:2rem 0">No se encontraron productos.</p>';
-      return;
-    }
+    if (!filtered.length) { grid.innerHTML='<p style="color:var(--text-muted);padding:2rem 0">No se encontraron productos.</p>'; return; }
     var html = '';
-    filtered.forEach(function(p) {
-      html += '<div class="product-card" id="pc-' + p.id + '">'
-            + '<div class="product-img" style="background:' + getBg(p.cat) + ';position:relative;overflow:hidden;">'
-            + (p.badge ? '<span class="badge ' + (p.badge==='hot'?'hot':'new') + '" style="z-index:5;">' + (p.badge==='hot'?'🔥 Popular':'🆕 Nuevo') + '</span>' : '')
-            + buildImgArea(p)
-            + '</div>'
-            + '<div class="product-info">'
-            + '<div class="product-ages">⏱ ' + p.ages + '</div>'
-            + '<div class="product-name">' + p.name + '</div>'
-            + '<div class="product-desc">' + p.desc + '</div>'
-            + '<div class="product-footer">'
-            + '<div class="product-price">' + (p.orig ? '<small>S/ ' + p.orig + '</small>' : '') + 'S/ ' + p.price + '</div>'
-            + '<button class="btn-add" id="btn-' + p.id + '" onclick="addToCart(' + p.id + ')" title="Agregar">+</button>'
-            + '</div></div></div>';
+    filtered.forEach(function(p){
+      var thumb = (p.imgs&&p.imgs.length>0) ? p.imgs[0] : null;
+      var imgArea = thumb
+        ? '<img src="'+thumb+'" alt="'+p.name+'" style="width:92%;height:92%;object-fit:contain;margin-top:18px;cursor:pointer;" onclick="openDetail('+p.id+')">'
+        : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+p.id+')">'+(p.emoji||'🎮')+'</span>';
+      html += '<div class="product-card">'
+        +'<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
+        +(p.badge?'<span class="badge '+(p.badge==='hot'?'hot':'new')+'">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>':'')
+        +imgArea+'</div>'
+        +'<div class="product-info">'
+        +'<div class="product-ages">⏱ '+p.ages+' &nbsp;·&nbsp; 👥 '+p.players+'</div>'
+        +'<div class="product-name">'+p.name+'</div>'
+        +'<div class="product-desc">'+p.desc+'</div>'
+        +'<div class="product-footer">'
+        +'<div class="product-price">'+(p.orig?'<small>S/ '+p.orig+'</small>':'')+'S/ '+p.price+'</div>'
+        +'<button class="btn-detail" onclick="openDetail('+p.id+')">Ver más →</button>'
+        +'</div></div></div>';
     });
     grid.innerHTML = html;
-    // inicializar índices
-    filtered.forEach(function(p){ carIdx[p.id] = 0; });
   }
 
   function filterCat(cat, el) {
     currentCat = cat;
-    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});
     el.classList.add('active');
     renderProducts();
   }
@@ -786,144 +624,173 @@
     renderProducts();
   }
 
-  function addToCart(id) {
-    const p = products.find(x => x.id === id);
-    const existing = cart.find(x => x.id === id);
-    if (existing) existing.qty++;
-    else cart.push({...p, qty:1});
-    updateCartCount();
-    showToast('✓ ' + p.name + ' agregado');
-    const btn = document.getElementById('btn-' + id);
-    if (btn) {
-      btn.classList.add('added');
-      btn.textContent = '✓';
-      setTimeout(() => { btn.classList.remove('added'); btn.textContent = '+'; }, 1200);
+  // MODAL DETALLE
+  var detailIdx = 0;
+  var detailP = null;
+
+  function openDetail(id) {
+    detailP = products.find(function(x){return x.id===id;});
+    if (!detailP) return;
+    detailIdx = 0;
+    buildDetail();
+    document.getElementById('detail-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function buildDetail() {
+    var p = detailP;
+    var hasImgs = p.imgs && p.imgs.length > 0;
+    var total = hasImgs ? p.imgs.length : 0;
+
+    var gal = '<div class="dm-gallery">';
+    if (hasImgs) {
+      gal += '<div class="dm-main-img"><img src="'+p.imgs[0]+'" id="dm-main-img" alt="'+p.name+'">'
+           + (total>1 ? '<button class="dm-arr dm-prev" onclick="dSlide(-1)">&#8249;</button><button class="dm-arr dm-next" onclick="dSlide(1)">&#8250;</button>' : '')
+           + '</div>';
+      if (total>1) {
+        gal += '<div class="dm-thumbs">';
+        for (var i=0;i<total;i++) gal += '<img src="'+p.imgs[i]+'" class="dm-thumb'+(i===0?' dm-thumb-on':'')+'" onclick="dGo('+i+')" alt="">';
+        gal += '</div>';
+      }
+    } else {
+      gal += '<div class="dm-main-img" style="font-size:5rem;display:flex;align-items:center;justify-content:center;">'+(p.emoji||'🎮')+'</div>';
     }
+    gal += '</div>';
+
+    var info = '<div class="dm-info">'
+      +(p.badge?'<span class="badge '+(p.badge==='hot'?'hot':'new')+'" style="position:static;display:inline-block;margin-bottom:8px;">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>':'')
+      +'<h2 class="dm-name">'+p.name+'</h2>'
+      +'<div class="dm-meta"><span>⏱ '+p.ages+'</span><span>👥 '+p.players+'</span></div>'
+      +'<div class="dm-section"><div class="dm-section-title">📖 Descripción</div><p class="dm-text">'+p.desc+'</p></div>'
+      +'<div class="dm-section"><div class="dm-section-title">🧠 Habilidades que desarrolla</div><p class="dm-text">'+p.skills+'</p></div>'
+      +'<div class="dm-price-row">'+(p.orig?'<span class="dm-orig">S/ '+p.orig+'</span>':'')+'<span class="dm-price">S/ '+p.price+'</span></div>'
+      +'<div class="dm-btns">'
+      +'<button class="btn-primary" onclick="addFromDetail('+p.id+')">🛒 Agregar al carrito</button>'
+      +(p.mpLink?'<button class="btn-mp" onclick="window.open(\''+p.mpLink+'\',\'_blank\')">Pagar con Mercado Pago →</button>':'')
+      +'</div></div>';
+
+    document.getElementById('detail-body').innerHTML = gal + info;
+  }
+
+  function dSlide(dir) {
+    detailIdx = (detailIdx + dir + detailP.imgs.length) % detailP.imgs.length;
+    dUpdateImg();
+  }
+
+  function dGo(i) { detailIdx = i; dUpdateImg(); }
+
+  function dUpdateImg() {
+    var img = document.getElementById('dm-main-img');
+    if (img) img.src = detailP.imgs[detailIdx];
+    document.querySelectorAll('.dm-thumb').forEach(function(t,i){
+      t.className = 'dm-thumb'+(i===detailIdx?' dm-thumb-on':'');
+    });
+  }
+
+  function addFromDetail(id) { addToCart(id); closeDetail(); }
+
+  // CARRITO
+  function addToCart(id) {
+    var p = products.find(function(x){return x.id===id;});
+    var ex = cart.find(function(x){return x.id===id;});
+    if (ex) ex.qty++; else cart.push(Object.assign({},p,{qty:1}));
+    updateCartCount();
+    showToast('✓ '+p.name+' agregado');
   }
 
   function updateCartCount() {
-    const total = cart.reduce((s, x) => s + x.qty, 0);
-    document.getElementById('cart-count').textContent = total;
+    document.getElementById('cart-count').textContent = cart.reduce(function(s,x){return s+x.qty;},0);
   }
 
-  function openCart() {
-    renderCartModal();
-    document.getElementById('cart-modal').classList.add('open');
-  }
-
-  function closeCart() {
-    document.getElementById('cart-modal').classList.remove('open');
-  }
+  function openCart() { renderCartModal(); document.getElementById('cart-modal').classList.add('open'); }
+  function closeCart() { document.getElementById('cart-modal').classList.remove('open'); }
 
   function renderCartModal() {
-    const list = document.getElementById('cart-items-list');
-    const area = document.getElementById('cart-checkout-area');
+    var list = document.getElementById('cart-items-list');
+    var area = document.getElementById('cart-checkout-area');
     if (!cart.length) {
-      list.innerHTML = '<div class="cart-empty">🛒<br>Tu carrito está vacío<br>¡Agrega algunos juegos!</div>';
-      area.innerHTML = '';
-      return;
+      list.innerHTML='<div class="cart-empty">🛒<br>Tu carrito está vacío<br>¡Agrega algunos juegos!</div>';
+      area.innerHTML=''; return;
     }
-    list.innerHTML = cart.map(item => `
-      <div class="cart-item">
-        <span class="cart-item-emoji">${getProductThumb(item)}</span>
-        <div class="cart-item-info">
-          <div class="cart-item-name">${item.name}</div>
-          <div style="font-size:0.78rem; color:var(--text-muted)">Cant: ${item.qty}</div>
-        </div>
-        <span class="cart-item-price">S/ ${item.price * item.qty}</span>
-        <button class="cart-remove" onclick="removeFromCart(${item.id})">✕</button>
-      </div>
-    `).join('');
-    const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
-    area.innerHTML = `
-      <div class="cart-total">Total: S/ ${total}</div>
-      <button class="btn-checkout" onclick="openPayment()">Elegir método de pago →</button>
-    `;
+    list.innerHTML = cart.map(function(item){
+      var th = (item.imgs&&item.imgs.length>0)
+        ? '<img src="'+item.imgs[0]+'" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#f5f5f5;">'
+        : (item.emoji||'🎮');
+      return '<div class="cart-item"><span class="cart-item-emoji">'+th+'</span>'
+        +'<div class="cart-item-info"><div class="cart-item-name">'+item.name+'</div>'
+        +'<div style="font-size:0.78rem;color:var(--text-muted)">Cant: '+item.qty+'</div></div>'
+        +'<span class="cart-item-price">S/ '+(item.price*item.qty)+'</span>'
+        +'<button class="cart-remove" onclick="removeFromCart('+item.id+')">✕</button></div>';
+    }).join('');
+    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+    area.innerHTML='<div class="cart-total">Total: S/ '+total+'</div>'
+      +'<button class="btn-checkout" onclick="openPayment()">Elegir método de pago →</button>';
   }
 
   function removeFromCart(id) {
-    cart = cart.filter(x => x.id !== id);
-    updateCartCount();
-    renderCartModal();
+    cart = cart.filter(function(x){return x.id!==id;});
+    updateCartCount(); renderCartModal();
   }
 
+  // PAGOS
   function openPayment() {
-    const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
-    document.getElementById('yape-total').textContent = 'Total a pagar: S/ ' + total;
-    document.getElementById('mp-total').textContent = 'Total a pagar: S/ ' + total;
+    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+    document.getElementById('yape-total').textContent='Total a pagar: S/ '+total;
+    document.getElementById('mp-total').textContent='Total a pagar: S/ '+total;
     closeCart();
     document.getElementById('payment-modal').classList.add('open');
   }
 
-  function closePayment() {
-    document.getElementById('payment-modal').classList.remove('open');
-  }
+  function closePayment() { document.getElementById('payment-modal').classList.remove('open'); }
 
   function switchTab(tab, el) {
-    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.pay-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.pay-panel').forEach(function(p){p.classList.remove('active');});
     el.classList.add('active');
-    document.getElementById('panel-' + tab).classList.add('active');
+    document.getElementById('panel-'+tab).classList.add('active');
   }
 
   function confirmYape() {
-    const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
-    const items = cart.map(x => `• ${x.name} x${x.qty} = S/ ${x.price * x.qty}`).join('%0A');
-    const msg = `Hola Neuro Play! 🎮%0AYa realicé mi pago por Yape.%0A%0A*Mi pedido:*%0A${items}%0A%0A*Total pagado: S/ ${total}*%0A%0APor favor confirmar mi pedido. ¡Gracias!`;
-    window.open('https://wa.me/51936710169?text=' + msg, '_blank');
+    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+    var items = cart.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
+    window.open('https://wa.me/51936710169?text=Hola Neuro Play! 🎮%0AYa realicé mi pago por Yape.%0A%0A*Mi pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*%0A%0APor favor confirmar mi pedido!','_blank');
     closePayment();
   }
 
   function goToMP() {
-    // Si hay un solo producto en el carrito y tiene link propio, ir directo
-    if (cart.length === 1 && cart[0].mpLink) {
-      window.open(cart[0].mpLink, '_blank');
-      return;
-    }
-    // Si hay varios productos, abrir los links uno por uno
-    const conLink = cart.filter(x => x.mpLink);
-    const sinLink = cart.filter(x => !x.mpLink);
-    if (conLink.length > 0) {
-      conLink.forEach(item => window.open(item.mpLink, '_blank'));
-    }
-    if (sinLink.length > 0) {
-      const nombres = sinLink.map(x => x.name).join(', ');
-      alert('⚠️ Estos productos aún no tienen link de Mercado Pago: ' + nombres + '\n\nContáctanos por WhatsApp para coordinar el pago.');
-      const total = sinLink.reduce((s, x) => s + x.price * x.qty, 0);
-      const items = sinLink.map(x => `• ${x.name} x${x.qty} = S/ ${x.price * x.qty}`).join('%0A');
-      const msg = `Hola Neuro Play! 🎮%0AQuiero pagar por Mercado Pago:%0A${items}%0A*Total: S/ ${total}*`;
-      window.open('https://wa.me/51936710169?text=' + msg, '_blank');
+    var conLink = cart.filter(function(x){return x.mpLink;});
+    var sinLink = cart.filter(function(x){return !x.mpLink;});
+    conLink.forEach(function(item){window.open(item.mpLink,'_blank');});
+    if (sinLink.length>0) {
+      var total = sinLink.reduce(function(s,x){return s+x.price*x.qty;},0);
+      var items = sinLink.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
+      window.open('https://wa.me/51936710169?text=Hola Neuro Play!%0AQuiero pagar por Mercado Pago:%0A'+items+'%0ATotal: S/ '+total,'_blank');
     }
   }
 
+  // UTILIDADES
   function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(function(){t.classList.remove('show');},2500);
   }
 
   function subscribeNL() {
-    const email = document.getElementById('nl-email').value;
-    if (!email || !email.includes('@')) { alert('Por favor ingresa un correo válido'); return; }
-    // =========================================================
-    // AQUÍ CONECTAS TU SERVICIO DE EMAIL MARKETING
-    // Envía el email a: storeneuroplay@gmail.com
-    // =========================================================
+    var email = document.getElementById('nl-email').value;
+    if (!email||!email.includes('@')) { alert('Por favor ingresa un correo válido'); return; }
     showToast('🎉 ¡Suscripción exitosa!');
-    document.getElementById('nl-email').value = '';
+    document.getElementById('nl-email').value='';
   }
 
-  document.getElementById('payment-modal').addEventListener('click', function(e) {
-    if (e.target === this) closePayment();
-  });
+  document.getElementById('cart-modal').addEventListener('click',function(e){if(e.target===this)closeCart();});
+  document.getElementById('payment-modal').addEventListener('click',function(e){if(e.target===this)closePayment();});
+  document.getElementById('detail-modal').addEventListener('click',function(e){if(e.target===this)closeDetail();});
 
-  // Cerrar modal al hacer clic fuera
-  document.getElementById('cart-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeCart();
-  });
-
-  // Inicializar
   renderProducts();
 </script>
 </body>
