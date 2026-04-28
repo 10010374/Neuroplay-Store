@@ -180,31 +180,33 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 .btn-checkout:hover { background: var(--primary-dark); }
 
 /* PAYMENT MODAL */
-.payment-modal { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
+.payment-modal { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; }
 .payment-modal.open { display: flex; }
-.payment-box { background: #fff; border-radius: 24px; padding: 2rem; max-width: 420px; width: 100%; position: relative; text-align: center; margin: auto; max-height: 90vh; overflow-y: auto; }
-.payment-box h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 0.3rem; }
-.pay-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; }
-.pay-tabs { display: flex; gap: 8px; margin-bottom: 1.2rem; }
-.pay-tab { flex: 1; padding: 10px; border: 2px solid #E8E8E8; border-radius: 12px; background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; color: var(--text); }
+.payment-box { background: #fff; border-radius: 24px; padding: 1.4rem; max-width: 400px; width: 100%; position: relative; text-align: center; }
+.payment-box h3 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 0.2rem; }
+.pay-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+.pay-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+.pay-tab { flex: 1; padding: 8px; border: 2px solid #E8E8E8; border-radius: 12px; background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: var(--text); }
 .pay-tab.active { border-color: var(--primary); background: #FFF5EE; color: var(--primary); }
 .pay-panel { display: none; }
 .pay-panel.active { display: block; }
-.yape-qr-box { background: #F8F0FF; border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; }
-.yape-qr-box img { width: 140px; height: 140px; border-radius: 12px; border: 3px solid #7B2FBE; }
-.yape-number { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #7B2FBE; margin: 0.4rem 0 0.2rem; }
-.yape-name { font-size: 0.82rem; color: #7B2FBE; font-weight: 700; }
-.pay-total-box { background: #F8F8F8; border-radius: 12px; padding: 0.7rem; margin: 0.8rem 0; font-family: 'Fredoka One', cursive; font-size: 1.1rem; }
-.pay-instructions { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.8rem; text-align: left; }
-.btn-confirm-yape { background: #7B2FBE; color: #fff; border: none; border-radius: 50px; padding: 13px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; width: 100%; transition: background 0.2s; }
+.yape-qr-box { background: #F8F0FF; border-radius: 16px; padding: 0.8rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 1rem; text-align: left; }
+.yape-qr-box img { width: 90px; height: 90px; border-radius: 10px; border: 2px solid #7B2FBE; flex-shrink: 0; }
+.yape-qr-info { flex: 1; }
+.yape-number { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #7B2FBE; line-height: 1.2; }
+.yape-name { font-size: 0.78rem; color: #7B2FBE; font-weight: 700; margin-top: 2px; }
+.yape-hint { font-size: 0.72rem; color: #888; margin-top: 4px; }
+.pay-total-box { background: #F8F8F8; border-radius: 12px; padding: 0.6rem; margin: 0.7rem 0; font-family: 'Fredoka One', cursive; font-size: 1.05rem; }
+.pay-instructions { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.7rem; text-align: left; }
+.btn-confirm-yape { background: #7B2FBE; color: #fff; border: none; border-radius: 50px; padding: 11px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: background 0.2s; }
 .btn-confirm-yape:hover { background: #5E1F9A; }
-.mp-box { background: linear-gradient(135deg, #E8F6FF, #D0EEFF); border-radius: 16px; padding: 1.2rem; margin-bottom: 0.8rem; }
-.mp-logo { font-size: 1rem; font-weight: 900; color: #009EE3; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
-.mp-sub { font-size: 0.8rem; color: #555; }
-.btn-mp { background: #009EE3; color: #fff; border: none; border-radius: 50px; padding: 13px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; width: 100%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.mp-box { background: linear-gradient(135deg, #E8F6FF, #D0EEFF); border-radius: 16px; padding: 1rem; margin-bottom: 0.7rem; }
+.mp-logo { font-size: 0.95rem; font-weight: 900; color: #009EE3; margin-bottom: 0.2rem; }
+.mp-sub { font-size: 0.78rem; color: #555; }
+.btn-mp { background: #009EE3; color: #fff; border: none; border-radius: 50px; padding: 11px 24px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-mp:hover { background: #007BB5; }
-.mp-secure { font-size: 0.72rem; color: #aaa; margin-top: 0.6rem; }
-.pay-close { position: absolute; top: 0.8rem; right: 0.8rem; background: #f5f5f5; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.mp-secure { font-size: 0.7rem; color: #aaa; margin-top: 0.5rem; }
+.pay-close { position: absolute; top: 0.8rem; right: 0.8rem; background: #f5f5f5; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .pay-close:hover { background: #e0e0e0; }
 
 /* TOAST */
@@ -266,12 +268,11 @@ footer a { color: var(--accent); text-decoration: none; }
   .toast { left: 16px; right: 16px; bottom: 70px; }
   .modal { padding: 1.5rem; border-radius: 16px 16px 0 0; max-height: 90vh; }
   .modal-overlay.open { align-items: flex-end; }
-  .payment-modal.open { align-items: flex-end; padding: 0; }
-  .payment-box { border-radius: 24px 24px 0 0; max-width: 100%; max-height: 92vh; padding: 1.5rem; }
-  .yape-qr-box img { width: 120px; height: 120px; }
-  .yape-number { font-size: 1.2rem; }
-  .pay-tabs { gap: 6px; }
-  .pay-tab { padding: 8px 6px; font-size: 0.82rem; }
+  .payment-modal.open { align-items: center; padding: 1rem; }
+  .payment-box { border-radius: 24px; padding: 1.2rem; }
+  .pay-tab { font-size: 0.78rem; padding: 7px 4px; }
+  .yape-qr-box img { width: 75px; height: 75px; }
+  .yape-number { font-size: 1.1rem; }
   .detail-overlay { padding: 0.5rem; align-items: center; }
   .detail-box { border-radius: 20px; max-height: 92vh; overflow-y: auto; }
   .detail-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; font-size: 1rem; }
@@ -470,25 +471,26 @@ footer a { color: var(--accent); text-decoration: none; }
     </div>
     <div class="pay-panel active" id="panel-yape">
       <div class="yape-qr-box">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=yape://936710169&bgcolor=F8F0FF&color=7B2FBE" alt="QR Yape">
-        <div class="yape-number">936 710 169</div>
-        <div class="yape-name">Neuro Play</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=yape://936710169&bgcolor=F8F0FF&color=7B2FBE" alt="QR Yape">
+        <div class="yape-qr-info">
+          <div class="yape-number">936 710 169</div>
+          <div class="yape-name">Neuro Play</div>
+          <div class="yape-hint">Escanea el QR o busca el número</div>
+        </div>
       </div>
       <div class="pay-total-box" id="yape-total">Total: S/ 0</div>
-      <p class="pay-instructions">1. Abre tu app de Yape<br>2. Escanea el QR o busca el número<br>3. Envía el monto exacto con tu nombre<br>4. Toca el botón para confirmar por WhatsApp</p>
+      <p class="pay-instructions">1. Abre Yape y escanea el QR o busca el número<br>2. Envía el monto exacto con tu nombre<br>3. Confirma tu pedido por WhatsApp</p>
       <button class="btn-confirm-yape" onclick="confirmYape()">✅ Ya yapé, confirmar pedido</button>
     </div>
     <div class="pay-panel" id="panel-mp">
       <div class="mp-box">
-        <div style="font-size:2.5rem;margin-bottom:0.4rem;">💳</div>
+        <div style="font-size:2rem;margin-bottom:0.3rem;">💳</div>
         <div class="mp-logo">Mercado Pago</div>
         <div class="mp-sub">Paga con tarjeta de crédito, débito o saldo MP</div>
       </div>
       <div class="pay-total-box" id="mp-total">Total: S/ 0</div>
-      <p class="pay-instructions">Al hacer clic serás redirigido a Mercado Pago para completar tu pago de forma segura. Acepta Visa, Mastercard y más.</p>
-      <button class="btn-mp" onclick="goToMP()">
-        <span>💳</span> Pagar con Mercado Pago
-      </button>
+      <p class="pay-instructions">Serás redirigido a Mercado Pago para completar tu pago de forma segura. Acepta Visa, Mastercard y más.</p>
+      <button class="btn-mp" onclick="goToMP()"><span>💳</span> Pagar con Mercado Pago</button>
       <p class="mp-secure">🔒 Pago 100% seguro · Encriptación SSL</p>
     </div>
   </div>
