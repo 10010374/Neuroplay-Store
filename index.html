@@ -647,10 +647,22 @@ footer a { color: var(--accent); text-decoration: none; }
   <h2 class="section-title">Elige por <span>Edad</span></h2>
   <p class="section-sub">Cada etapa tiene sus propios desafíos y aprendizajes</p>
   <div class="age-guide">
-    <div class="age-card orange"><span class="age-emoji">👶</span><h4>0 – 2 años</h4><p>Estimulación sensorial y motricidad</p></div>
-    <div class="age-card teal"><span class="age-emoji">🧒</span><h4>3 – 5 años</h4><p>Imaginación, lenguaje y coordinación</p></div>
-    <div class="age-card purple"><span class="age-emoji">👧</span><h4>6 – 8 años</h4><p>Lógica, lectura y creatividad</p></div>
-    <div class="age-card green"><span class="age-emoji">🧑</span><h4>9 – 12 años</h4><p>Pensamiento crítico y ciencias</p></div>
+    <div class="age-card orange" onclick="filterByAge('0-2')" style="cursor:pointer" title="Ver juegos para 0-2 años">
+      <span class="age-emoji">👶</span><h4>0 – 2 años</h4><p>Estimulación sensorial y motricidad</p>
+      <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
+    </div>
+    <div class="age-card teal" onclick="filterByAge('3-5')" style="cursor:pointer" title="Ver juegos para 3-5 años">
+      <span class="age-emoji">🧒</span><h4>3 – 5 años</h4><p>Imaginación, lenguaje y coordinación</p>
+      <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
+    </div>
+    <div class="age-card purple" onclick="filterByAge('6-8')" style="cursor:pointer" title="Ver juegos para 6-8 años">
+      <span class="age-emoji">👧</span><h4>6 – 8 años</h4><p>Lógica, lectura y creatividad</p>
+      <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
+    </div>
+    <div class="age-card green" onclick="filterByAge('9-12')" style="cursor:pointer" title="Ver juegos para 9-12 años">
+      <span class="age-emoji">🧑</span><h4>9 – 12 años</h4><p>Pensamiento crítico y ciencias</p>
+      <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
+    </div>
   </div>
 </div>
 
@@ -753,10 +765,9 @@ footer a { color: var(--accent); text-decoration: none; }
     </div>
     <div class="pay-panel active" id="panel-yape">
       <div class="yape-qr-box">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=yape://936710169&bgcolor=F8F0FF&color=7B2FBE" alt="QR Yape">
+        <img src="qr_yape.jpeg" alt="QR Yape Neuro Play" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=936710169&bgcolor=F8F0FF&color=7B2FBE'">
         <div class="yape-qr-info">
           <div class="yape-number">936 710 169</div>
-          <div class="yape-name">Neuro Play</div>
           <div class="yape-hint">Escanea el QR o busca el número</div>
         </div>
       </div>
@@ -795,7 +806,7 @@ footer a { color: var(--accent); text-decoration: none; }
       id:1, name:"Polilla Tramposa",
       desc:"Juego terapéutico de cartas donde ¡se pueden hacer trampas! Convierte el momento de juego en una oportunidad de aprendizaje. Recomendado para niños con TDAH, dificultades de atención o impulsividad.",
       skills:"Atención · Autocontrol · Habilidades sociales · Tolerancia a la frustración",
-      ages:"7+ años", players:"2-5 jugadores",
+      ages:"7+ años", players:"2-5 jugadores", minAge:7, maxAge:99,
       price:49, orig:null,
       imgs:["polilla_tramposa_sin_fondo.png","polilla_tramposa_2.png","polilla tramposa 3.png"],
       cat:"logica", badge:"hot", mpLink:"https://mpago.la/2Hhxjro"
@@ -804,7 +815,7 @@ footer a { color: var(--accent); text-decoration: none; }
       id:2, name:"Stacking Fun",
       desc:"¡Apila los platos antes que el tiempo acabe! Juego de habilidad y velocidad para toda la familia. Incluye base giratoria, piezas de colores y reloj de arena.",
       skills:"Motricidad fina · Velocidad de reacción · Coordinación ojo-mano · Concentración",
-      ages:"3+ años", players:"1-4 jugadores",
+      ages:"3+ años", players:"1-4 jugadores", minAge:3, maxAge:99,
       price:25, orig:null,
       imgs:["STACKING FUN 1.png","STACKING FUN 2.png","STACKING FUN 3.png"],
       cat:"motor", badge:"new", mpLink:null
@@ -813,7 +824,7 @@ footer a { color: var(--accent); text-decoration: none; }
       id:3, name:"Bloques Lógicos Premium",
       desc:"Desarrolla clasificación, seriación y lógica matemática con bloques de colores y formas variadas.",
       skills:"Lógica · Clasificación · Pensamiento matemático · Creatividad",
-      ages:"3-6 años", players:"1-4 jugadores",
+      ages:"3-6 años", players:"1-4 jugadores", minAge:3, maxAge:6,
       price:89, orig:120, imgs:[], emoji:"🟦",
       cat:"logica", badge:null, mpLink:null
     },
@@ -923,6 +934,65 @@ footer a { color: var(--accent); text-decoration: none; }
   function filterProducts() {
     searchQ = document.getElementById('search-input').value;
     renderProducts();
+  }
+
+  function filterByAge(range) {
+    // Scroll suave a la sección de productos
+    document.getElementById('productos').scrollIntoView({behavior:'smooth'});
+    // Mapa de rangos a edades mín/máx
+    var ranges = {
+      '0-2': {min:0, max:2},
+      '3-5': {min:3, max:5},
+      '6-8': {min:6, max:8},
+      '9-12': {min:9, max:12}
+    };
+    var r = ranges[range];
+    if (!r) return;
+    // Filtrar productos por edad
+    var grid = document.getElementById('products-grid');
+    // Resetear filtros de categoría
+    currentCat = 'todos';
+    searchQ = '';
+    document.getElementById('search-input').value = '';
+    document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});
+    document.querySelector('.cat-pill').classList.add('active');
+    // Filtrar por rango de edad
+    var filtered = products.filter(function(p) {
+      var min = p.minAge !== undefined ? p.minAge : 0;
+      var max = p.maxAge !== undefined ? p.maxAge : 99;
+      // El producto aplica si su rango se superpone con el rango buscado
+      return min <= r.max && max >= r.min;
+    });
+    if (!filtered.length) {
+      grid.innerHTML = '<p style="color:var(--text-muted);padding:2rem 0;grid-column:1/-1;">🔍 Próximamente juegos para este rango de edad. ¡Síguenos!</p>';
+      return;
+    }
+    // Renderizar solo los filtrados
+    var html = '';
+    filtered.forEach(function(p) {
+      var thumb = p.imgs && p.imgs.length > 0 ? p.imgs[0] : null;
+      html += '<div class="product-card" id="pc-'+p.id+'">'
+            + '<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
+            + (p.badge ? '<span class="badge '+(p.badge==='hot'?'hot':'new')+'" style="z-index:5;">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>' : '')
+            + (thumb ? '<img src="'+thumb+'" alt="'+p.name+'" loading="lazy" decoding="async" style="width:92%;height:92%;object-fit:contain;margin-top:18px;cursor:pointer;" onclick="openDetail('+p.id+')">'
+                     : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+p.id+')">'+( p.emoji||'🎮')+'</span>')
+            + '</div>'
+            + '<div class="product-info">'
+            + '<div class="product-ages">⏱ '+p.ages+'</div>'
+            + '<div class="product-name">'+p.name+'</div>'
+            + '<div class="product-footer">'
+            + '<div class="product-price">'+(p.orig?'<small>S/ '+p.orig+'</small>':'')+'S/ '+p.price+'</div>'
+            + '<button class="btn-detail" onclick="openDetail('+p.id+')">Ver más →</button>'
+            + '</div></div></div>';
+    });
+    grid.innerHTML = html;
+    // Mostrar cuántos encontró
+    setTimeout(function(){
+      var label = document.createElement('p');
+      label.style.cssText = 'font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;grid-column:1/-1;';
+      label.textContent = '🎯 Mostrando '+filtered.length+' juego'+(filtered.length>1?'s':'')+' para '+range+' años';
+      grid.insertBefore(label, grid.firstChild);
+    }, 100);
   }
 
   // MODAL DETALLE
