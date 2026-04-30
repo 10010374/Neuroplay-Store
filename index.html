@@ -4,10 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ===== FAVICON - Generado en código SVG ===== -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='bl' cx='35%' cy='45%'><stop offset='0%' stop-color='%2360BFFF'/><stop offset='100%' stop-color='%231E90FF'/></radialGradient><radialGradient id='or' cx='65%' cy='55%'><stop offset='0%' stop-color='%23FFB347'/><stop offset='100%' stop-color='%23FF5500'/></radialGradient></defs><ellipse cx='35' cy='52' rx='28' ry='26' fill='url(%23bl)'/><ellipse cx='62' cy='52' rx='26' ry='24' fill='url(%23or)'/><ellipse cx='35' cy='52' rx='28' ry='26' fill='none' stroke='%23fff' stroke-width='1.5' opacity='0.3'/><polygon points='50,38 64,52 50,66' fill='white' opacity='0.95'/><circle cx='28' cy='38' r='3.5' fill='%23fff' opacity='0.6'/><circle cx='22' cy='50' r='2.5' fill='%23fff' opacity='0.5'/><circle cx='30' cy='62' r='2' fill='%23fff' opacity='0.4'/><line x1='28' y1='28' x2='28' y2='22' stroke='%231E90FF' stroke-width='2.5' stroke-linecap='round'/><line x1='36' y1='26' x2='38' y2='20' stroke='%231E90FF' stroke-width='2' stroke-linecap='round'/><line x1='20' y1='32' x2='16' y2='28' stroke='%231E90FF' stroke-width='2' stroke-linecap='round'/><circle cx='28' cy='22' r='3' fill='%231E90FF'/><circle cx='38' cy='20' r='2' fill='%231E90FF'/><circle cx='16' cy='28' r='2' fill='%231E90FF'/></svg>">
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='bl' cx='35%' cy='45%'><stop offset='0%' stop-color='%2360BFFF'/><stop offset='100%' stop-color='%231E90FF'/></radialGradient><radialGradient id='or' cx='65%' cy='55%'><stop offset='0%' stop-color='%23FFB347'/><stop offset='100%' stop-color='%23FF5500'/></radialGradient></defs><ellipse cx='35' cy='52' rx='28' ry='26' fill='url(%23bl)'/><ellipse cx='62' cy='52' rx='26' ry='24' fill='url(%23or)'/><polygon points='50,38 64,52 50,66' fill='white' opacity='0.95'/><circle cx='28' cy='38' r='3.5' fill='%23fff' opacity='0.6'/><circle cx='22' cy='50' r='2.5' fill='%23fff' opacity='0.5'/><line x1='28' y1='28' x2='28' y2='22' stroke='%231E90FF' stroke-width='2.5' stroke-linecap='round'/><line x1='36' y1='26' x2='38' y2='20' stroke='%231E90FF' stroke-width='2' stroke-linecap='round'/><circle cx='28' cy='22' r='3' fill='%231E90FF'/><circle cx='38' cy='20' r='2' fill='%231E90FF'/></svg>">
+<!-- ===== FAVICON generado dinámicamente ===== -->
+<link rel="icon" id="favicon-link" type="image/png">
+<link rel="apple-touch-icon" id="apple-icon" sizes="180x180">
 <meta name="msapplication-TileColor" content="#FF6B35">
+<meta name="theme-color" content="#FF6B35">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NeuroPlay">
+<script>
+(function(){
+  function makeFavicon(size) {
+    var c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    var ctx = c.getContext('2d');
+    var s = size;
+    // Fondo redondeado naranja
+    var r = s * 0.22;
+    ctx.beginPath();
+    ctx.moveTo(r, 0); ctx.lineTo(s-r, 0);
+    ctx.quadraticCurveTo(s, 0, s, r);
+    ctx.lineTo(s, s-r);
+    ctx.quadraticCurveTo(s, s, s-r, s);
+    ctx.lineTo(r, s);
+    ctx.quadraticCurveTo(0, s, 0, s-r);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.closePath();
+    ctx.fillStyle = '#FF6B35';
+    ctx.fill();
+    // Cerebro izquierdo azul
+    var gL = ctx.createRadialGradient(s*0.32, s*0.52, 0, s*0.32, s*0.52, s*0.28);
+    gL.addColorStop(0, '#60BFFF'); gL.addColorStop(1, '#1565C0');
+    ctx.beginPath();
+    ctx.ellipse(s*0.34, s*0.55, s*0.26, s*0.25, 0, 0, Math.PI*2);
+    ctx.fillStyle = gL; ctx.fill();
+    // Cerebro derecho naranja
+    var gR = ctx.createRadialGradient(s*0.64, s*0.52, 0, s*0.64, s*0.52, s*0.25);
+    gR.addColorStop(0, '#FFB347'); gR.addColorStop(1, '#E04E00');
+    ctx.beginPath();
+    ctx.ellipse(s*0.64, s*0.55, s*0.24, s*0.23, 0, 0, Math.PI*2);
+    ctx.fillStyle = gR; ctx.fill();
+    // Triángulo play blanco
+    ctx.beginPath();
+    ctx.moveTo(s*0.44, s*0.36);
+    ctx.lineTo(s*0.72, s*0.55);
+    ctx.lineTo(s*0.44, s*0.74);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fill();
+    // Puntos neuronales blancos
+    [[0.22,0.40],[0.17,0.55],[0.22,0.70]].forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(s*p[0], s*p[1], s*0.03, 0, Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.fill();
+    });
+    // Antenas azules
+    var antenas = [[s*0.26,s*0.30,s*0.26,s*0.18],[s*0.36,s*0.26,s*0.40,s*0.14],[s*0.16,s*0.38,s*0.10,s*0.26]];
+    antenas.forEach(function(a){
+      ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(a[2],a[3]);
+      ctx.strokeStyle='#90CFFF'; ctx.lineWidth=s*0.035; ctx.lineCap='round'; ctx.stroke();
+      ctx.beginPath(); ctx.arc(a[2],a[3],s*0.04,0,Math.PI*2);
+      ctx.fillStyle='#1565C0'; ctx.fill();
+    });
+    return c.toDataURL('image/png');
+  }
+  var png32 = makeFavicon(32);
+  var png180 = makeFavicon(180);
+  document.getElementById('favicon-link').href = png32;
+  document.getElementById('apple-icon').href = png180;
+})();
+</script>
 
 <!-- ===== SEO PRINCIPAL ===== -->
 <title>Neuro Play | Juegos Terapéuticos y Didácticos en Perú — Lima</title>
@@ -22,7 +89,7 @@
 <meta name="language" content="Spanish">
 <meta name="rating" content="general">
 
-<!-- ===== OPEN GRAPH (Facebook, WhatsApp, Instagram) ===== -->
+<!-- ===== OPEN GRAPH ===== -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://neuroplay.store/">
 <meta property="og:title" content="Neuro Play | Juegos Terapéuticos y Didácticos en Perú">
@@ -39,61 +106,156 @@
 <meta name="twitter:description" content="Juegos terapéuticos y didácticos para niños. Envíos a todo el Perú.">
 <meta name="twitter:image" content="https://neuroplay.store/logoneuroplay.png">
 
-<!-- ===== SCHEMA.ORG - Google Rich Results ===== -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Store",
-  "name": "Neuro Play",
-  "alternateName": "NeuroPlay Juegos Terapéuticos",
-  "description": "Tienda online de juegos terapéuticos y didácticos en Perú. Desarrolla habilidades cognitivas, atención y autocontrol en niños.",
-  "url": "https://neuroplay.store",
-  "logo": "https://neuroplay.store/logoneuroplay.png",
-  "image": "https://neuroplay.store/logoneuroplay.png",
-  "telephone": "+51936710169",
-  "email": "storeneuroplay@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "PE",
-    "addressLocality": "Lima",
-    "addressRegion": "Lima"
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Neuro Play",
+    "alternateName": "NeuroPlay Juegos Terapéuticos",
+    "description": "Tienda online de juegos terapéuticos y didácticos en Perú.",
+    "url": "https://neuroplay.store",
+    "logo": "https://neuroplay.store/logoneuroplay.png",
+    "image": "https://neuroplay.store/logoneuroplay.png",
+    "telephone": "+51936710169",
+    "email": "storeneuroplay@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "PE",
+      "addressLocality": "Lima",
+      "addressRegion": "Lima"
+    },
+    "areaServed": { "@type": "Country", "name": "Perú" },
+    "currenciesAccepted": "PEN",
+    "paymentAccepted": "Yape, Mercado Pago",
+    "priceRange": "S/25 - S/150",
+    "openingHours": "Mo-Sa 09:00-20:00",
+    "sameAs": ["https://wa.me/51936710169"]
   },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Perú"
-  },
-  "currenciesAccepted": "PEN",
-  "paymentAccepted": "Yape, Mercado Pago",
-  "priceRange": "S/25 - S/150",
-  "openingHours": "Mo-Sa 09:00-20:00",
-  "sameAs": [
-    "https://wa.me/51936710169"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Juegos Terapéuticos y Didácticos",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Product",
-          "name": "Polilla Tramposa",
-          "description": "Juego terapéutico de cartas para trabajar atención, autocontrol y habilidades sociales",
-          "offers": { "@type": "Offer", "price": "49", "priceCurrency": "PEN", "availability": "https://schema.org/InStock" }
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Polilla Tramposa",
+    "description": "Juego terapéutico de cartas para trabajar atención, autocontrol y habilidades sociales en niños. Ideal para TDAH. Recomendado por terapeutas infantiles.",
+    "image": [
+      "https://neuroplay.store/polilla_tramposa_sin_fondo.png",
+      "https://neuroplay.store/polilla_tramposa_2.png"
+    ],
+    "brand": { "@type": "Brand", "name": "Devir" },
+    "sku": "NPL-001",
+    "mpn": "NPL-001",
+    "audience": { "@type": "PeopleAudience", "suggestedMinAge": 7 },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://neuroplay.store",
+      "priceCurrency": "PEN",
+      "price": "49.00",
+      "priceValidUntil": "2026-12-31",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": { "@type": "Organization", "name": "Neuro Play" },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "@id": "https://neuroplay.store/#shipping-lima",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "0",
+          "currency": "PEN"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "PE",
+          "addressRegion": "Lima"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0, "maxValue": 1, "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1, "maxValue": 2, "unitCode": "DAY"
+          }
         }
       },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Product",
-          "name": "Stacking Fun",
-          "description": "Juego de habilidad y velocidad para apilar platos contra el tiempo",
-          "offers": { "@type": "Offer", "price": "25", "priceCurrency": "PEN", "availability": "https://schema.org/InStock" }
-        }
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "@id": "https://neuroplay.store/#return-policy",
+        "name": "Política de devoluciones Neuro Play",
+        "description": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra.",
+        "applicableCountry": "PE",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn",
+        "merchantReturnLink": "https://neuroplay.store"
       }
-    ]
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Stacking Fun",
+    "description": "Juego de habilidad y velocidad para apilar platos antes que el tiempo acabe. Desarrolla coordinación y motricidad fina. Para 3 años en adelante.",
+    "image": [
+      "https://neuroplay.store/STACKING%20FUN%201.png",
+      "https://neuroplay.store/STACKING%20FUN%202.png",
+      "https://neuroplay.store/STACKING%20FUN%203.png"
+    ],
+    "brand": { "@type": "Brand", "name": "Neuro Play" },
+    "sku": "NPL-002",
+    "mpn": "NPL-002",
+    "audience": { "@type": "PeopleAudience", "suggestedMinAge": 3 },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://neuroplay.store",
+      "priceCurrency": "PEN",
+      "price": "25.00",
+      "priceValidUntil": "2026-12-31",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": { "@type": "Organization", "name": "Neuro Play" },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "@id": "https://neuroplay.store/#shipping-lima",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "0",
+          "currency": "PEN"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "PE",
+          "addressRegion": "Lima"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0, "maxValue": 1, "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1, "maxValue": 2, "unitCode": "DAY"
+          }
+        }
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "@id": "https://neuroplay.store/#return-policy",
+        "name": "Política de devoluciones Neuro Play",
+        "description": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra.",
+        "applicableCountry": "PE",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn",
+        "merchantReturnLink": "https://neuroplay.store"
+      }
+    }
   }
-}
+]
 </script>
 
 <!-- ===== VELOCIDAD: Preconnect ===== -->
