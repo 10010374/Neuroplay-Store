@@ -134,6 +134,45 @@
   },
   {
     "@context": "https://schema.org",
+    "@type": "OfferShippingDetails",
+    "@id": "https://neuroplay.store/#shipping-lima",
+    "shippingRate": {
+      "@type": "MonetaryAmount",
+      "value": "0",
+      "currency": "PEN"
+    },
+    "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": "PE",
+      "addressRegion": "Lima"
+    },
+    "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 0, "maxValue": 1, "unitCode": "DAY"
+      },
+      "transitTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 1, "maxValue": 2, "unitCode": "DAY"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "MerchantReturnPolicy",
+    "@id": "https://neuroplay.store/#return-policy",
+    "name": "Política de devoluciones Neuro Play",
+    "description": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra.",
+    "applicableCountry": "PE",
+    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+    "merchantReturnDays": 30,
+    "returnMethod": "https://schema.org/ReturnByMail",
+    "returnFees": "https://schema.org/FreeReturn",
+    "merchantReturnLink": "https://neuroplay.store"
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "Product",
     "name": "Polilla Tramposa",
     "description": "Juego terapéutico de cartas para trabajar atención, autocontrol y habilidades sociales en niños. Ideal para TDAH. Recomendado por terapeutas infantiles.",
@@ -154,43 +193,8 @@
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": { "@type": "Organization", "name": "Neuro Play" },
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "@id": "https://neuroplay.store/#shipping-lima",
-        "shippingRate": {
-          "@type": "MonetaryAmount",
-          "value": "0",
-          "currency": "PEN"
-        },
-        "shippingDestination": {
-          "@type": "DefinedRegion",
-          "addressCountry": "PE",
-          "addressRegion": "Lima"
-        },
-        "deliveryTime": {
-          "@type": "ShippingDeliveryTime",
-          "handlingTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 0, "maxValue": 1, "unitCode": "DAY"
-          },
-          "transitTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 1, "maxValue": 2, "unitCode": "DAY"
-          }
-        }
-      },
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "@id": "https://neuroplay.store/#return-policy",
-        "name": "Política de devoluciones Neuro Play",
-        "description": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra.",
-        "applicableCountry": "PE",
-        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 30,
-        "returnMethod": "https://schema.org/ReturnByMail",
-        "returnFees": "https://schema.org/FreeReturn",
-        "merchantReturnLink": "https://neuroplay.store"
-      }
+      "shippingDetails": { "@id": "https://neuroplay.store/#shipping-lima" },
+      "hasMerchantReturnPolicy": { "@id": "https://neuroplay.store/#return-policy" }
     }
   },
   {
@@ -216,43 +220,8 @@
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": { "@type": "Organization", "name": "Neuro Play" },
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "@id": "https://neuroplay.store/#shipping-lima",
-        "shippingRate": {
-          "@type": "MonetaryAmount",
-          "value": "0",
-          "currency": "PEN"
-        },
-        "shippingDestination": {
-          "@type": "DefinedRegion",
-          "addressCountry": "PE",
-          "addressRegion": "Lima"
-        },
-        "deliveryTime": {
-          "@type": "ShippingDeliveryTime",
-          "handlingTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 0, "maxValue": 1, "unitCode": "DAY"
-          },
-          "transitTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 1, "maxValue": 2, "unitCode": "DAY"
-          }
-        }
-      },
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "@id": "https://neuroplay.store/#return-policy",
-        "name": "Política de devoluciones Neuro Play",
-        "description": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra.",
-        "applicableCountry": "PE",
-        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 30,
-        "returnMethod": "https://schema.org/ReturnByMail",
-        "returnFees": "https://schema.org/FreeReturn",
-        "merchantReturnLink": "https://neuroplay.store"
-      }
+      "shippingDetails": { "@id": "https://neuroplay.store/#shipping-lima" },
+      "hasMerchantReturnPolicy": { "@id": "https://neuroplay.store/#return-policy" }
     }
   }
 ]
