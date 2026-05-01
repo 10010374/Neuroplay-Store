@@ -429,11 +429,19 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 .pay-panel { display: none; }
 .pay-panel.active { display: block; }
 .yape-qr-box { background: #F8F0FF; border-radius: 16px; padding: 0.8rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 1rem; text-align: left; }
-.yape-qr-box img { width: 90px; height: 90px; border-radius: 10px; border: 2px solid #7B2FBE; flex-shrink: 0; }
+.yape-qr-box img { width: 90px; height: 90px; border-radius: 10px; border: 2px solid #7B2FBE; flex-shrink: 0; image-rendering: crisp-edges; }
 .yape-qr-info { flex: 1; }
 .yape-number { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #7B2FBE; line-height: 1.2; }
-.yape-name { font-size: 0.78rem; color: #7B2FBE; font-weight: 700; margin-top: 2px; }
 .yape-hint { font-size: 0.72rem; color: #888; margin-top: 4px; }
+
+/* QR grande en escritorio para que sea escaneable con el celular */
+@media (min-width: 601px) {
+  .yape-qr-box { flex-direction: column; align-items: center; text-align: center; padding: 1.2rem; }
+  .yape-qr-box img { width: 200px; height: 200px; border-radius: 14px; border: 3px solid #7B2FBE; }
+  .yape-qr-info { text-align: center; }
+  .yape-number { font-size: 1.5rem; }
+  .yape-hint { font-size: 0.78rem; }
+}
 .pay-total-box { background: #F8F8F8; border-radius: 12px; padding: 0.6rem; margin: 0.7rem 0; font-family: 'Fredoka One', cursive; font-size: 1.05rem; }
 .pay-instructions { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.7rem; text-align: left; }
 .btn-confirm-yape { background: #7B2FBE; color: #fff; border: none; border-radius: 50px; padding: 11px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: background 0.2s; }
