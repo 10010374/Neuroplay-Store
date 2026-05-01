@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-  <!-- Página principal -->
-  <url>
-    <loc>https://neuroplay.store/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://neuroplay.store/logoneuroplay.png</image:loc>
-      <image:title>Neuro Play - Juegos Terapéuticos y Didácticos en Perú</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://neuroplay.store/polilla_tramposa_sin_fondo.png</image:loc>
-      <image:title>Polilla Tramposa - Juego terapéutico de cartas</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://neuroplay.store/STACKING%20FUN%201.png</image:loc>
-      <image:title>Stacking Fun - Juego de habilidad y velocidad</image:title>
-    </image:image>
-  </url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://neuroplay.store/</loc>
+<lastmod>2026-05-01</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1.0</priority>
+<image:image>
+<image:loc>https://neuroplay.store/logoneuroplay.png</image:loc>
+<image:title>Neuro Play - Juegos Terapeuticos y Didacticos en Peru</image:title>
+</image:image>
+<image:image>
+<image:loc>https://neuroplay.store/polilla_tramposa_sin_fondo.png</image:loc>
+<image:title>Polilla Tramposa - Juego terapeutico de cartas</image:title>
+</image:image>
+<image:image>
+<image:loc>https://neuroplay.store/STACKING%20FUN%201.png</image:loc>
+<image:title>Stacking Fun - Juego de habilidad y velocidad</image:title>
+</image:image>
+</url>
 </urlset>
