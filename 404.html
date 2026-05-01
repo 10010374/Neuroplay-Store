@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página no encontrada — Neuro Play</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://neuroplay.store/">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: #FFFBF7; color: #2D2D2D; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; }
+  .logo { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 2rem; }
+  .logo .neuro { color: #1E90FF; }
+  .logo .play { color: #FF5500; }
+  .logo .sub { display: block; font-size: 0.55rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-top: 2px; font-family: 'Nunito', sans-serif; font-weight: 700; }
+  .num { font-family: 'Fredoka One', cursive; font-size: 6rem; color: #FF6B35; line-height: 1; margin-bottom: 0.5rem; }
+  h1 { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 0.8rem; }
+  p { color: #777; font-size: 1rem; line-height: 1.6; max-width: 380px; margin-bottom: 2rem; }
+  .btn { background: #FF6B35; color: #fff; border: none; border-radius: 50px; padding: 14px 32px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn:hover { background: #E04E18; }
+  .emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+</style>
+<!-- Redirige automáticamente a la tienda después de 5 segundos -->
+<meta http-equiv="refresh" content="5;url=https://neuroplay.store/">
+<script>
+  // Redirige inmediatamente si la URL parece una ruta interna
+  var path = window.location.pathname;
+  if (path !== '/' && path !== '/404.html') {
+    setTimeout(function(){ window.location.href = 'https://neuroplay.store/'; }, 3000);
+  }
+</script>
+</head>
+<body>
+  <div class="logo">
+    <span class="neuro">Neuro</span><span class="play">Play</span>
+    <span class="sub">— Juegos Terapéuticos —</span>
+  </div>
+  <span class="emoji">🧩</span>
+  <div class="num">404</div>
+  <h1>¡Ups! Página no encontrada</h1>
+  <p>La página que buscas no existe o fue movida. Te redirigiremos a la tienda en unos segundos...</p>
+  <a class="btn" href="https://neuroplay.store/">Ir a la tienda →</a>
+</body>
+</html>
