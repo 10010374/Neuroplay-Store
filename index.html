@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ===== FAVICON generado dinámicamente ===== -->
+<!-- ===== FAVICON mejorado ===== -->
 <link rel="icon" id="favicon-link" type="image/png">
 <link rel="apple-touch-icon" id="apple-icon" sizes="180x180">
 <meta name="msapplication-TileColor" content="#FF6B35">
@@ -20,59 +20,93 @@
     c.width = size; c.height = size;
     var ctx = c.getContext('2d');
     var s = size;
-    // Fondo redondeado naranja
-    var r = s * 0.22;
+
+    // Fondo blanco con borde redondeado
+    var r = s * 0.18;
     ctx.beginPath();
-    ctx.moveTo(r, 0); ctx.lineTo(s-r, 0);
-    ctx.quadraticCurveTo(s, 0, s, r);
-    ctx.lineTo(s, s-r);
-    ctx.quadraticCurveTo(s, s, s-r, s);
-    ctx.lineTo(r, s);
-    ctx.quadraticCurveTo(0, s, 0, s-r);
-    ctx.lineTo(0, r);
-    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.moveTo(r,0); ctx.lineTo(s-r,0);
+    ctx.quadraticCurveTo(s,0,s,r);
+    ctx.lineTo(s,s-r);
+    ctx.quadraticCurveTo(s,s,s-r,s);
+    ctx.lineTo(r,s);
+    ctx.quadraticCurveTo(0,s,0,s-r);
+    ctx.lineTo(0,r);
+    ctx.quadraticCurveTo(0,0,r,0);
     ctx.closePath();
-    ctx.fillStyle = '#FF6B35';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fill();
-    // Cerebro izquierdo azul
-    var gL = ctx.createRadialGradient(s*0.32, s*0.52, 0, s*0.32, s*0.52, s*0.28);
-    gL.addColorStop(0, '#60BFFF'); gL.addColorStop(1, '#1565C0');
+
+    // Sombra suave
+    ctx.shadowColor = 'rgba(0,0,0,0.15)';
+    ctx.shadowBlur = s * 0.04;
+
+    // Cerebro izquierdo AZUL oscuro
+    var gL = ctx.createRadialGradient(s*0.33,s*0.54,0,s*0.33,s*0.54,s*0.27);
+    gL.addColorStop(0,'#42A5F5');
+    gL.addColorStop(1,'#1565C0');
     ctx.beginPath();
-    ctx.ellipse(s*0.34, s*0.55, s*0.26, s*0.25, 0, 0, Math.PI*2);
-    ctx.fillStyle = gL; ctx.fill();
-    // Cerebro derecho naranja
-    var gR = ctx.createRadialGradient(s*0.64, s*0.52, 0, s*0.64, s*0.52, s*0.25);
-    gR.addColorStop(0, '#FFB347'); gR.addColorStop(1, '#E04E00');
+    ctx.ellipse(s*0.34, s*0.56, s*0.25, s*0.24, -0.1, 0, Math.PI*2);
+    ctx.fillStyle = gL;
+    ctx.fill();
+
+    // Cerebro derecho NARANJA oscuro
+    var gR = ctx.createRadialGradient(s*0.63,s*0.54,0,s*0.63,s*0.54,s*0.24);
+    gR.addColorStop(0,'#FF7043');
+    gR.addColorStop(1,'#BF360C');
     ctx.beginPath();
-    ctx.ellipse(s*0.64, s*0.55, s*0.24, s*0.23, 0, 0, Math.PI*2);
-    ctx.fillStyle = gR; ctx.fill();
-    // Triángulo play blanco
+    ctx.ellipse(s*0.63, s*0.56, s*0.23, s*0.22, 0.1, 0, Math.PI*2);
+    ctx.fillStyle = gR;
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+    // Línea divisoria blanca entre cerebros
     ctx.beginPath();
-    ctx.moveTo(s*0.44, s*0.36);
-    ctx.lineTo(s*0.72, s*0.55);
-    ctx.lineTo(s*0.44, s*0.74);
+    ctx.moveTo(s*0.5, s*0.33);
+    ctx.lineTo(s*0.5, s*0.78);
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = s*0.025;
+    ctx.stroke();
+
+    // Triángulo PLAY blanco
+    ctx.beginPath();
+    ctx.moveTo(s*0.43, s*0.38);
+    ctx.lineTo(s*0.68, s*0.56);
+    ctx.lineTo(s*0.43, s*0.74);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fill();
-    // Puntos neuronales blancos
-    [[0.22,0.40],[0.17,0.55],[0.22,0.70]].forEach(function(p){
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    ctx.fill();
+
+    // Puntos neuronales blancos sobre azul
+    [[0.20,0.42],[0.15,0.56],[0.20,0.70]].forEach(function(p){
       ctx.beginPath();
-      ctx.arc(s*p[0], s*p[1], s*0.03, 0, Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.fill();
+      ctx.arc(s*p[0], s*p[1], s*0.028, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.fill();
     });
-    // Antenas azules
-    var antenas = [[s*0.26,s*0.30,s*0.26,s*0.18],[s*0.36,s*0.26,s*0.40,s*0.14],[s*0.16,s*0.38,s*0.10,s*0.26]];
-    antenas.forEach(function(a){
-      ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(a[2],a[3]);
-      ctx.strokeStyle='#90CFFF'; ctx.lineWidth=s*0.035; ctx.lineCap='round'; ctx.stroke();
-      ctx.beginPath(); ctx.arc(a[2],a[3],s*0.04,0,Math.PI*2);
-      ctx.fillStyle='#1565C0'; ctx.fill();
+
+    // Antenas azules con puntas
+    var ants = [[s*0.25,s*0.33,s*0.22,s*0.18],[s*0.34,s*0.29,s*0.34,s*0.14],[s*0.15,s*0.40,s*0.08,s*0.28]];
+    ants.forEach(function(a){
+      ctx.beginPath();
+      ctx.moveTo(a[0],a[1]);
+      ctx.lineTo(a[2],a[3]);
+      ctx.strokeStyle = '#1565C0';
+      ctx.lineWidth = s*0.03;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(a[2],a[3],s*0.038,0,Math.PI*2);
+      ctx.fillStyle = '#1565C0';
+      ctx.fill();
     });
+
     return c.toDataURL('image/png');
   }
-  var png32 = makeFavicon(32);
-  var png180 = makeFavicon(180);
+  var png32  = makeFavicon(64);
+  var png180 = makeFavicon(256);
   document.getElementById('favicon-link').href = png32;
-  document.getElementById('apple-icon').href = png180;
+  document.getElementById('apple-icon').href   = png180;
 })();
 </script>
 
@@ -797,24 +831,44 @@ footer a { color: var(--accent); text-decoration: none; }
       id:1, name:"Polilla Tramposa",
       desc:"Juego terapéutico de cartas donde ¡se pueden hacer trampas! Convierte el momento de juego en una oportunidad de aprendizaje. Recomendado para niños con TDAH, dificultades de atención o impulsividad.",
       skills:"Atención · Autocontrol · Habilidades sociales · Tolerancia a la frustración",
-      ages:"7+ años", players:"2-5 jugadores", minAge:7, maxAge:99,
+      ages:"7-12 años", players:"2-5 jugadores", minAge:7, maxAge:12,
       ageGroups:['6-8','9-12'],
       price:49, orig:null,
-      imgs:["polilla_tramposa_sin_fondo.png","polilla_tramposa_2.png","polilla tramposa 3.png"],
+      imgs:["POLILLA_TRAMPOSA.webp","POLILLA_TRAMPOSA_2.webp"],
       cat:"logica", badge:"hot", mpLink:"https://mpago.la/2Hhxjro"
     },
     {
       id:2, name:"Stacking Fun",
       desc:"¡Apila los platos antes que el tiempo acabe! Juego de habilidad y velocidad para toda la familia. Incluye base giratoria, piezas de colores y reloj de arena.",
       skills:"Motricidad fina · Velocidad de reacción · Coordinación ojo-mano · Concentración",
-      ages:"3+ años", players:"1-4 jugadores", minAge:3, maxAge:99,
-      ageGroups:['3-5','6-8','9-12'],
+      ages:"3-7 años", players:"1-4 jugadores", minAge:3, maxAge:7,
+      ageGroups:['3-5','6-8'],
       price:25, orig:null,
-      imgs:["STACKING FUN 1.png","STACKING FUN 2.png","STACKING FUN 3.png"],
+      imgs:["STACKING_FUN.webp","STACKING_FUN_2.webp"],
       cat:"motor", badge:"new", mpLink:null
     },
     {
-      id:3, name:"Bloques Lógicos Premium",
+      id:3, name:"5 Sentidos",
+      desc:"Juego didáctico para explorar y aprender los 5 sentidos: vista, oído, olfato, gusto y tacto. Ideal para estimulación sensorial temprana en niños.",
+      skills:"Estimulación sensorial · Vocabulario · Atención · Discriminación perceptiva",
+      ages:"4-12 años", players:"2-3 jugadores", minAge:4, maxAge:12,
+      ageGroups:['3-5','6-8','9-12'],
+      price:29, orig:null,
+      imgs:["5_SENTIDOS.webp","5_SENTIDOS_2.webp"],
+      cat:"ciencias", badge:"new", mpLink:"https://mpago.la/2hSKU23"
+    },
+    {
+      id:4, name:"Anger Management Cards",
+      desc:"42+ tarjetas con actividades para calmar la mente y el cuerpo. Herramienta terapéutica para manejar la ira y las emociones difíciles en niños.",
+      skills:"Regulación emocional · Autocontrol · Mindfulness · Manejo de la ira",
+      ages:"4-12 años", players:"Individual o 2 jugadores", minAge:4, maxAge:12,
+      ageGroups:['3-5','6-8','9-12'],
+      price:29, orig:null,
+      imgs:["ANGER_MANAGEMENT.webp","ANGER_MANAGEMENT_2.webp"],
+      cat:"logica", badge:"new", mpLink:"https://mpago.la/2zAffFE"
+    },
+    {
+      id:5, name:"Bloques Lógicos Premium",
       desc:"Desarrolla clasificación, seriación y lógica matemática con bloques de colores y formas variadas.",
       skills:"Lógica · Clasificación · Pensamiento matemático · Creatividad",
       ages:"3-6 años", players:"1-4 jugadores", minAge:3, maxAge:6,
@@ -823,7 +877,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"logica", badge:null, mpLink:null
     },
     {
-      id:4, name:"Kit Científico Explorador",
+      id:6, name:"Kit Científico Explorador",
       desc:"30 experimentos caseros fáciles y seguros para despertar la curiosidad científica en los niños.",
       skills:"Pensamiento científico · Observación · Experimentación · Creatividad",
       ages:"6-10 años", players:"1-3 jugadores", minAge:6, maxAge:10,
@@ -832,7 +886,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"ciencias", badge:null, mpLink:null
     },
     {
-      id:5, name:"Rompecabezas 3D Mundo",
+      id:7, name:"Rompecabezas 3D Mundo",
       desc:"Mapa mundi tridimensional con 200 piezas y colores vivos para aprender geografía jugando.",
       skills:"Paciencia · Concentración · Geografía · Pensamiento espacial",
       ages:"5-9 años", players:"1-4 jugadores", minAge:5, maxAge:9,
@@ -841,7 +895,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"logica", badge:null, mpLink:null
     },
     {
-      id:6, name:"Arte con Arcilla Mágica",
+      id:8, name:"Arte con Arcilla Mágica",
       desc:"Arcilla moldeable y segura en 12 colores brillantes para liberar la creatividad de los niños.",
       skills:"Creatividad · Motricidad fina · Expresión artística · Imaginación",
       ages:"4-8 años", players:"1+ jugadores", minAge:4, maxAge:8,
@@ -850,7 +904,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"arte", badge:null, mpLink:null
     },
     {
-      id:7, name:"Abecedario Magnético",
+      id:9, name:"Abecedario Magnético",
       desc:"Letras y números magnéticos con tablero incluido para aprender de forma divertida.",
       skills:"Lectura · Escritura · Reconocimiento de letras · Matemáticas básicas",
       ages:"3-6 años", players:"1-2 jugadores", minAge:3, maxAge:6,
@@ -859,7 +913,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"letras", badge:null, mpLink:null
     },
     {
-      id:8, name:"Dominó de Fracciones",
+      id:10, name:"Dominó de Fracciones",
       desc:"Aprende fracciones jugando con fichas coloridas. Ideal para reforzar matemáticas de forma lúdica.",
       skills:"Fracciones · Lógica matemática · Concentración · Estrategia",
       ages:"7-12 años", players:"2-4 jugadores", minAge:7, maxAge:12,
@@ -868,7 +922,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"matematicas", badge:null, mpLink:null
     },
     {
-      id:9, name:"Torre de Equilibrio",
+      id:11, name:"Torre de Equilibrio",
       desc:"Desarrolla concentración y motricidad fina apilando piezas sin que caiga la torre.",
       skills:"Motricidad fina · Concentración · Paciencia · Coordinación",
       ages:"2-5 años", players:"1-4 jugadores", minAge:2, maxAge:5,
@@ -877,7 +931,7 @@ footer a { color: var(--accent); text-decoration: none; }
       cat:"motor", badge:null, mpLink:null
     },
     {
-      id:10, name:"Cuentos STEM para Niñas",
+      id:12, name:"Cuentos STEM para Niñas",
       desc:"6 libros ilustrados sobre mujeres en ciencias que inspiran a las futuras científicas.",
       skills:"Lectura · Inspiración · Vocabulario científico · Valores",
       ages:"5-10 años", players:"Individual", minAge:5, maxAge:10,
