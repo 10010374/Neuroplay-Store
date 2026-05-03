@@ -110,7 +110,24 @@
 })();
 </script>
 
-<!-- ===== SEO PRINCIPAL ===== -->
+<!-- ===== CONTENT SECURITY POLICY ===== -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: blob: https://api.qrserver.com https://neuroplay.store;
+  connect-src 'self';
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self' https://wa.me https://mpago.la;
+  upgrade-insecure-requests;
+">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 <title>Neuro Play | Juegos Terapéuticos y Didácticos en Perú — Lima</title>
 <meta name="description" content="🧠 Tienda online de juegos terapéuticos y didácticos en Perú. Desarrolla habilidades cognitivas, atención y autocontrol en niños. Envíos Lima y provincias. Paga con Yape o Mercado Pago. ¡Visítanos en neuroplay.store!">
 <meta name="keywords" content="juegos terapéuticos Perú, juegos didácticos Lima, juegos educativos niños, Neuro Play, juegos para TDAH, estimulación temprana, juegos de mesa educativos Perú, polilla tramposa Perú, stacking fun Perú, tienda juegos Lima, juegos para niños Lima">
@@ -346,7 +363,8 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; align-items: stretch; }
 .product-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column; }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-.product-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; flex-shrink: 0; }
+.product-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; flex-shrink: 0; background: #fff; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .badge { position: absolute; top: 10px; left: 10px; z-index: 3; color: #fff; font-size: 0.7rem; font-weight: 800; border-radius: 50px; padding: 4px 10px; }
 .badge.hot { background: var(--primary); }
 .badge.new { background: var(--purple); }
@@ -961,7 +979,7 @@ footer a { color: var(--accent); text-decoration: none; }
     filtered.forEach(function(p){
       var thumb = (p.imgs&&p.imgs.length>0) ? p.imgs[0] : null;
       var imgArea = thumb
-        ? '<img src="'+thumb+'" alt="'+p.name+'" loading="lazy" decoding="async" style="width:92%;height:92%;object-fit:contain;margin-top:18px;cursor:pointer;" onclick="openDetail('+p.id+')">'
+        ? '<img src="'+thumb+'" alt="'+p.name+'" loading="lazy" decoding="async" onclick="openDetail('+p.id+')">'
         : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+p.id+')">'+(p.emoji||'🎮')+'</span>';
       html += '<div class="product-card">'
         +'<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
