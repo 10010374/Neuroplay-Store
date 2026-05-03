@@ -304,6 +304,10 @@
 }
 body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
+/* SPINNER VERIFICACIÓN */
+.verif-spinner { width: 44px; height: 44px; border: 5px solid #f0f0f0; border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 /* NAV */
 nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; }
 .logo-name { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; }
@@ -832,6 +836,21 @@ footer a { color: var(--accent); text-decoration: none; }
   </div>
 </div>
 
+<!-- MODAL VERIFICACIÓN PAGO -->
+<div class="modal-overlay" id="verificacion-modal" style="z-index:400;">
+  <div class="modal" style="max-width:380px;text-align:center;">
+    <button class="modal-close" onclick="cerrarVerificacion()">✕</button>
+    <h3 style="margin-bottom:0.5rem;">🔍 Estado del pago</h3>
+    <div id="verif-estado" style="padding:1rem 0;">
+      <div class="verif-spinner"></div>
+      <p style="font-weight:700;margin-top:1rem;">Esperando verificación...</p>
+    </div>
+    <button id="verif-btn" class="btn-checkout" onclick="verificarPagoMP()" style="display:none;margin-top:0.5rem;">
+      ✅ Ya pagué, verificar ahora
+    </button>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast">✓ Agregado</div>
 
@@ -1186,6 +1205,13 @@ footer a { color: var(--accent); text-decoration: none; }
     updateCartCount(); renderCartModal();
   }
 
+  // =============================================
+  // CONFIGURACIÓN WEBHOOK
+  // Cambia esta URL por la que te da Railway
+  // =============================================
+  var WEBHOOK_URL = 'https://TU-URL-RAILWAY.up.railway.app';
+  var ADMIN_TOKEN = 'TU_ADMIN_TOKEN'; // El mismo que pusiste en Railway
+
   // PAGOS
   function openPayment() {
     var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
@@ -1204,22 +1230,140 @@ footer a { color: var(--accent); text-decoration: none; }
     document.getElementById('panel-'+tab).classList.add('active');
   }
 
+  // ---- YAPE: confirmar por WhatsApp ----
   function confirmYape() {
     var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
     var items = cart.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
-    window.open('https://wa.me/51936710169?text=Hola Neuro Play! 🎮%0AYa realicé mi pago por Yape.%0A%0A*Mi pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*%0A%0APor favor confirmar mi pedido!','_blank');
+    var msg = 'Hola Neuro Play! 🎮%0AYa realicé mi pago por Yape.%0A%0A*Mi pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*%0A%0APor favor confirmar mi pedido!';
+    window.open('https://wa.me/51936710169?text='+msg,'_blank');
     closePayment();
+    mostrarConfirmacion('yape', total);
   }
 
+  // ---- MERCADO PAGO: abrir link y verificar ----
   function goToMP() {
     var conLink = cart.filter(function(x){return x.mpLink;});
     var sinLink = cart.filter(function(x){return !x.mpLink;});
-    conLink.forEach(function(item){window.open(item.mpLink,'_blank');});
-    if (sinLink.length>0) {
+
+    if (conLink.length > 0) {
+      // Guardamos los items pendientes de verificación
+      window._mpPendientes = conLink;
+      // Abrimos el link de pago
+      conLink.forEach(function(item){ window.open(item.mpLink,'_blank'); });
+      // Mostramos pantalla de espera de verificación
+      closePayment();
+      mostrarEsperaVerificacion();
+    }
+
+    if (sinLink.length > 0) {
       var total = sinLink.reduce(function(s,x){return s+x.price*x.qty;},0);
       var items = sinLink.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
       window.open('https://wa.me/51936710169?text=Hola Neuro Play!%0AQuiero pagar por Mercado Pago:%0A'+items+'%0ATotal: S/ '+total,'_blank');
     }
+  }
+
+  // ---- PANTALLA DE ESPERA VERIFICACIÓN ----
+  function mostrarEsperaVerificacion() {
+    var modal = document.getElementById('verificacion-modal');
+    document.getElementById('verif-estado').innerHTML =
+      '<div class="verif-spinner"></div>'
+      +'<p style="font-weight:700;margin-top:1rem;">Esperando confirmación de pago...</p>'
+      +'<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">Completa el pago en Mercado Pago y regresa aquí</p>';
+    document.getElementById('verif-btn').style.display = 'block';
+    modal.classList.add('open');
+  }
+
+  // ---- VERIFICAR PAGO CON EL WEBHOOK ----
+  function verificarPagoMP() {
+    var btn = document.getElementById('verif-btn');
+    var estado = document.getElementById('verif-estado');
+
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+    estado.innerHTML = '<div class="verif-spinner"></div><p style="font-weight:700;margin-top:1rem;">Consultando con Mercado Pago...</p>';
+
+    // Obtener el payment_id de la URL actual (MP lo agrega como ?payment_id=xxx)
+    var urlParams = new URLSearchParams(window.location.search);
+    var paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
+
+    if (!paymentId) {
+      // Si no hay ID en la URL, pedirlo manualmente
+      paymentId = prompt('Por favor pega aquí el número de pago que aparece en Mercado Pago:');
+    }
+
+    if (!paymentId || isNaN(paymentId)) {
+      estado.innerHTML = '<p style="color:#e53;font-weight:700;">❌ No se encontró el ID del pago.<br><small>Contáctanos por WhatsApp para confirmar manualmente.</small></p>';
+      btn.disabled = false;
+      btn.textContent = 'Reintentar';
+      return;
+    }
+
+    // Consultar al webhook si el pago está verificado
+    fetch(WEBHOOK_URL + '/verificar-pago/' + paymentId, {
+      headers: { 'Authorization': 'Bearer ' + ADMIN_TOKEN }
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      if (data.aprobado) {
+        // ✅ PAGO REAL VERIFICADO
+        var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+        estado.innerHTML =
+          '<div style="font-size:3rem;">✅</div>'
+          +'<p style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;color:var(--green);margin-top:0.5rem;">¡Pago verificado!</p>'
+          +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+data.monto+' · ID: '+data.id+'</p>'
+          +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te contactaremos pronto para coordinar la entrega 🚚</p>';
+        btn.style.display = 'none';
+        // Limpiar carrito
+        cart = [];
+        updateCartCount();
+        // Notificar por WhatsApp automáticamente
+        var items = (window._mpPendientes||[]).map(function(x){return '• '+x.name+' x'+(x.qty||1)+' = S/ '+x.price;}).join('%0A');
+        var msg = 'Neuro Play - Pago VERIFICADO 🎉%0AID: '+data.id+'%0AMonto: S/ '+data.monto+'%0A%0A'+items;
+        setTimeout(function(){
+          window.open('https://wa.me/51936710169?text='+msg,'_blank');
+        }, 1500);
+      } else if (data.estado === 'pending') {
+        estado.innerHTML =
+          '<div style="font-size:2.5rem;">⏳</div>'
+          +'<p style="font-weight:700;margin-top:0.5rem;">Pago pendiente</p>'
+          +'<p style="font-size:0.8rem;color:var(--text-muted);">Mercado Pago aún está procesando tu pago. Espera unos minutos e intenta de nuevo.</p>';
+        btn.disabled = false;
+        btn.textContent = 'Verificar de nuevo';
+      } else {
+        estado.innerHTML =
+          '<div style="font-size:2.5rem;">❌</div>'
+          +'<p style="font-weight:700;margin-top:0.5rem;color:#e53;">Pago no verificado</p>'
+          +'<p style="font-size:0.8rem;color:var(--text-muted);">No pudimos confirmar tu pago. Contáctanos por WhatsApp.</p>'
+          +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Contactar WhatsApp</a>';
+        btn.style.display = 'none';
+      }
+    })
+    .catch(function(){
+      // Si el webhook no está configurado aún, fallback a WhatsApp
+      estado.innerHTML =
+        '<div style="font-size:2.5rem;">⚠️</div>'
+        +'<p style="font-weight:700;margin-top:0.5rem;">Verificación manual</p>'
+        +'<p style="font-size:0.8rem;color:var(--text-muted);">Por favor envía el comprobante por WhatsApp para confirmar tu pedido.</p>'
+        +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Enviar comprobante</a>';
+      btn.style.display = 'none';
+    });
+  }
+
+  function cerrarVerificacion() {
+    document.getElementById('verificacion-modal').classList.remove('open');
+  }
+
+  // ---- CONFIRMACIÓN YAPE ----
+  function mostrarConfirmacion(metodo, total) {
+    var modal = document.getElementById('verificacion-modal');
+    document.getElementById('verif-estado').innerHTML =
+      '<div style="font-size:3rem;">💜</div>'
+      +'<p style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;margin-top:0.5rem;">¡Yape enviado!</p>'
+      +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+total+'</p>'
+      +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te confirmamos tu pedido por WhatsApp en breve 🚀</p>';
+    document.getElementById('verif-btn').style.display = 'none';
+    modal.classList.add('open');
+    cart = []; updateCartCount();
   }
 
   // UTILIDADES
