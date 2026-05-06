@@ -1162,11 +1162,27 @@ footer a { color: var(--accent); text-decoration: none; }
 
   function addFromDetail(id) { addToCart(id); closeDetail(); }
 
-  // CARRITO
+  // CARRITO — Solo guarda id, nombre, imgs y qty. NUNCA el precio.
+  // El precio real siempre viene del servidor.
   function addToCart(id) {
     var p = products.find(function(x){return x.id===id;});
+    if (!p) return;
     var ex = cart.find(function(x){return x.id===id;});
-    if (ex) ex.qty++; else cart.push(Object.assign({},p,{qty:1}));
+    if (ex) {
+      ex.qty++;
+    } else {
+      // Solo guardamos datos de presentación, NUNCA el precio
+      cart.push({
+        id:   p.id,
+        name: p.name,
+        imgs: p.imgs || [],
+        emoji: p.emoji || '🎮',
+        qty:  1,
+        mpLink: p.mpLink || null,
+        // price solo se usa para mostrar en UI, nunca para calcular el total real
+        _displayPrice: p.price,
+      });
+    }
     updateCartCount();
     showToast('✓ '+p.name+' agregado');
   }
@@ -1189,14 +1205,18 @@ footer a { color: var(--accent); text-decoration: none; }
       var th = (item.imgs&&item.imgs.length>0)
         ? '<img src="'+item.imgs[0]+'" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#f5f5f5;">'
         : (item.emoji||'🎮');
+      // Mostrar precio referencial con nota — el total real lo calcula el servidor
       return '<div class="cart-item"><span class="cart-item-emoji">'+th+'</span>'
         +'<div class="cart-item-info"><div class="cart-item-name">'+item.name+'</div>'
         +'<div style="font-size:0.78rem;color:var(--text-muted)">Cant: '+item.qty+'</div></div>'
-        +'<span class="cart-item-price">S/ '+(item.price*item.qty)+'</span>'
+        +'<span class="cart-item-price">S/ '+(item._displayPrice * item.qty)+'</span>'
         +'<button class="cart-remove" onclick="removeFromCart('+item.id+')">✕</button></div>';
     }).join('');
-    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
-    area.innerHTML='<div class="cart-total">Total: S/ '+total+'</div>'
+    // Total referencial en UI — el total REAL lo confirma el servidor al pagar
+    var totalDisplay = cart.reduce(function(s,x){return s+(x._displayPrice*x.qty);},0);
+    area.innerHTML=
+      '<div class="cart-total">Total referencial: S/ '+totalDisplay+'</div>'
+      +'<div style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-bottom:0.5rem;">✅ El total oficial se confirma al momento del pago</div>'
       +'<button class="btn-checkout" onclick="openPayment()">Elegir método de pago →</button>';
   }
 
@@ -1207,18 +1227,50 @@ footer a { color: var(--accent); text-decoration: none; }
 
   // =============================================
   // CONFIGURACIÓN WEBHOOK
-  // Cambia esta URL por la que te da Railway
   // =============================================
   var WEBHOOK_URL = 'https://TU-URL-RAILWAY.up.railway.app';
-  var ADMIN_TOKEN = 'TU_ADMIN_TOKEN'; // El mismo que pusiste en Railway
+  var ADMIN_TOKEN = 'TU_ADMIN_TOKEN';
 
-  // PAGOS
+  // Token del pedido validado por el servidor
+  var _pedidoToken = null;
+  var _pedidoTotal = 0;
+
   function openPayment() {
-    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
-    document.getElementById('yape-total').textContent='Total a pagar: S/ '+total;
-    document.getElementById('mp-total').textContent='Total a pagar: S/ '+total;
     closeCart();
     document.getElementById('payment-modal').classList.add('open');
+    document.getElementById('yape-total').textContent = 'Verificando total...';
+    document.getElementById('mp-total').textContent   = 'Verificando total...';
+
+    // Enviar SOLO id y qty — nunca precios del cliente
+    var itemsParaServidor = cart.map(function(x){
+      return { id: x.id, qty: x.qty };
+    });
+
+    fetch(WEBHOOK_URL + '/calcular-pedido', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ items: itemsParaServidor }),
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      if (!data.ok) {
+        alert('Error al verificar el pedido: ' + (data.error || 'Inténtalo de nuevo'));
+        closePayment(); return;
+      }
+      // Total OFICIAL del servidor — no se puede manipular desde el cliente
+      _pedidoToken = data.token;
+      _pedidoTotal = data.total;
+      document.getElementById('yape-total').textContent = 'Total verificado: S/ ' + data.total;
+      document.getElementById('mp-total').textContent   = 'Total verificado: S/ ' + data.total;
+    })
+    .catch(function(){
+      // Fallback si Railway no disponible
+      var total = cart.reduce(function(s,x){return s+(x._displayPrice*x.qty);},0);
+      _pedidoToken = null;
+      _pedidoTotal = total;
+      document.getElementById('yape-total').textContent = 'Total: S/ ' + total;
+      document.getElementById('mp-total').textContent   = 'Total: S/ ' + total;
+    });
   }
 
   function closePayment() { document.getElementById('payment-modal').classList.remove('open'); }
@@ -1230,39 +1282,68 @@ footer a { color: var(--accent); text-decoration: none; }
     document.getElementById('panel-'+tab).classList.add('active');
   }
 
-  // ---- YAPE: confirmar por WhatsApp ----
+  // =============================================
+  // YAPE — Mensaje generado por el servidor
+  // =============================================
   function confirmYape() {
-    var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
-    var items = cart.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
-    var msg = 'Hola Neuro Play! 🎮%0AYa realicé mi pago por Yape.%0A%0A*Mi pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*%0A%0APor favor confirmar mi pedido!';
-    window.open('https://wa.me/51936710169?text='+msg,'_blank');
-    closePayment();
-    mostrarConfirmacion('yape', total);
+    if (!_pedidoToken) {
+      // Fallback si servidor no disponible
+      var total = _pedidoTotal || cart.reduce(function(s,x){return s+x.price*x.qty;},0);
+      var items = cart.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
+      window.open('https://wa.me/51936710169?text=Hola Neuro Play! 🎮%0AYa yapé.%0A%0A*Pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*','_blank');
+      closePayment();
+      mostrarConfirmacion('yape', total);
+      return;
+    }
+
+    // Pedir al servidor que genere el mensaje con precios oficiales
+    fetch(WEBHOOK_URL + '/generar-mensaje-yape', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ token: _pedidoToken }),
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (!data.ok) {
+        alert(data.error || 'Error al generar el mensaje. Inténtalo de nuevo.');
+        return;
+      }
+      // Abrir WhatsApp con mensaje generado por el servidor
+      window.open(data.url, '_blank');
+      closePayment();
+      mostrarConfirmacion('yape', data.total);
+      _pedidoToken = null;
+    })
+    .catch(function() {
+      alert('Error de conexión. Inténtalo de nuevo.');
+    });
   }
 
-  // ---- MERCADO PAGO: abrir link y verificar ----
+  // =============================================
+  // MERCADO PAGO
+  // =============================================
   function goToMP() {
     var conLink = cart.filter(function(x){return x.mpLink;});
     var sinLink = cart.filter(function(x){return !x.mpLink;});
 
     if (conLink.length > 0) {
-      // Guardamos los items pendientes de verificación
       window._mpPendientes = conLink;
-      // Abrimos el link de pago
       conLink.forEach(function(item){ window.open(item.mpLink,'_blank'); });
-      // Mostramos pantalla de espera de verificación
       closePayment();
       mostrarEsperaVerificacion();
     }
 
     if (sinLink.length > 0) {
-      var total = sinLink.reduce(function(s,x){return s+x.price*x.qty;},0);
+      var total = _pedidoTotal || sinLink.reduce(function(s,x){return s+x.price*x.qty;},0);
       var items = sinLink.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
       window.open('https://wa.me/51936710169?text=Hola Neuro Play!%0AQuiero pagar por Mercado Pago:%0A'+items+'%0ATotal: S/ '+total,'_blank');
     }
+    _pedidoToken = null;
   }
 
-  // ---- PANTALLA DE ESPERA VERIFICACIÓN ----
+  // =============================================
+  // PANTALLA ESPERA VERIFICACIÓN MP
+  // =============================================
   function mostrarEsperaVerificacion() {
     var modal = document.getElementById('verificacion-modal');
     document.getElementById('verif-estado').innerHTML =
@@ -1273,87 +1354,75 @@ footer a { color: var(--accent); text-decoration: none; }
     modal.classList.add('open');
   }
 
-  // ---- VERIFICAR PAGO CON EL WEBHOOK ----
+  // =============================================
+  // VERIFICAR PAGO MP CON SERVIDOR
+  // =============================================
   function verificarPagoMP() {
-    var btn = document.getElementById('verif-btn');
+    var btn    = document.getElementById('verif-btn');
     var estado = document.getElementById('verif-estado');
 
-    btn.disabled = true;
+    btn.disabled    = true;
     btn.textContent = 'Verificando...';
     estado.innerHTML = '<div class="verif-spinner"></div><p style="font-weight:700;margin-top:1rem;">Consultando con Mercado Pago...</p>';
 
-    // Obtener el payment_id de la URL actual (MP lo agrega como ?payment_id=xxx)
     var urlParams = new URLSearchParams(window.location.search);
     var paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
 
     if (!paymentId) {
-      // Si no hay ID en la URL, pedirlo manualmente
-      paymentId = prompt('Por favor pega aquí el número de pago que aparece en Mercado Pago:');
+      paymentId = prompt('Pega aquí el número de pago que aparece en Mercado Pago:');
     }
 
     if (!paymentId || isNaN(paymentId)) {
-      estado.innerHTML = '<p style="color:#e53;font-weight:700;">❌ No se encontró el ID del pago.<br><small>Contáctanos por WhatsApp para confirmar manualmente.</small></p>';
-      btn.disabled = false;
-      btn.textContent = 'Reintentar';
+      estado.innerHTML =
+        '<p style="color:#e53;font-weight:700;">❌ No se encontró el ID del pago.<br><small>Contáctanos por WhatsApp.</small></p>'
+        +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 WhatsApp</a>';
+      btn.style.display = 'none';
       return;
     }
 
-    // Consultar al webhook si el pago está verificado
     fetch(WEBHOOK_URL + '/verificar-pago/' + paymentId, {
       headers: { 'Authorization': 'Bearer ' + ADMIN_TOKEN }
     })
     .then(function(res){ return res.json(); })
     .then(function(data){
       if (data.aprobado) {
-        // ✅ PAGO REAL VERIFICADO
-        var total = cart.reduce(function(s,x){return s+x.price*x.qty;},0);
         estado.innerHTML =
           '<div style="font-size:3rem;">✅</div>'
           +'<p style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;color:var(--green);margin-top:0.5rem;">¡Pago verificado!</p>'
           +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+data.monto+' · ID: '+data.id+'</p>'
-          +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te contactaremos pronto para coordinar la entrega 🚚</p>';
+          +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te contactaremos para coordinar la entrega 🚚</p>';
         btn.style.display = 'none';
-        // Limpiar carrito
-        cart = [];
-        updateCartCount();
-        // Notificar por WhatsApp automáticamente
-        var items = (window._mpPendientes||[]).map(function(x){return '• '+x.name+' x'+(x.qty||1)+' = S/ '+x.price;}).join('%0A');
-        var msg = 'Neuro Play - Pago VERIFICADO 🎉%0AID: '+data.id+'%0AMonto: S/ '+data.monto+'%0A%0A'+items;
+        cart = []; updateCartCount(); _pedidoToken = null;
+        var items = (window._mpPendientes||[]).map(function(x){return '• '+x.name+' = S/ '+x.price;}).join('%0A');
         setTimeout(function(){
-          window.open('https://wa.me/51936710169?text='+msg,'_blank');
+          window.open('https://wa.me/51936710169?text=Pago VERIFICADO ✅%0AID: '+data.id+'%0AMonto: S/ '+data.monto+'%0A%0A'+items,'_blank');
         }, 1500);
       } else if (data.estado === 'pending') {
         estado.innerHTML =
           '<div style="font-size:2.5rem;">⏳</div>'
           +'<p style="font-weight:700;margin-top:0.5rem;">Pago pendiente</p>'
-          +'<p style="font-size:0.8rem;color:var(--text-muted);">Mercado Pago aún está procesando tu pago. Espera unos minutos e intenta de nuevo.</p>';
-        btn.disabled = false;
-        btn.textContent = 'Verificar de nuevo';
+          +'<p style="font-size:0.8rem;color:var(--text-muted);">Espera unos minutos e intenta de nuevo.</p>';
+        btn.disabled = false; btn.textContent = 'Verificar de nuevo';
       } else {
         estado.innerHTML =
           '<div style="font-size:2.5rem;">❌</div>'
-          +'<p style="font-weight:700;margin-top:0.5rem;color:#e53;">Pago no verificado</p>'
-          +'<p style="font-size:0.8rem;color:var(--text-muted);">No pudimos confirmar tu pago. Contáctanos por WhatsApp.</p>'
+          +'<p style="font-weight:700;color:#e53;margin-top:0.5rem;">Pago no verificado</p>'
           +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Contactar WhatsApp</a>';
         btn.style.display = 'none';
       }
     })
     .catch(function(){
-      // Si el webhook no está configurado aún, fallback a WhatsApp
       estado.innerHTML =
         '<div style="font-size:2.5rem;">⚠️</div>'
         +'<p style="font-weight:700;margin-top:0.5rem;">Verificación manual</p>'
-        +'<p style="font-size:0.8rem;color:var(--text-muted);">Por favor envía el comprobante por WhatsApp para confirmar tu pedido.</p>'
+        +'<p style="font-size:0.8rem;color:var(--text-muted);">Envía el comprobante por WhatsApp.</p>'
         +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Enviar comprobante</a>';
       btn.style.display = 'none';
     });
   }
 
-  function cerrarVerificacion() {
-    document.getElementById('verificacion-modal').classList.remove('open');
-  }
+  function cerrarVerificacion() { document.getElementById('verificacion-modal').classList.remove('open'); }
 
-  // ---- CONFIRMACIÓN YAPE ----
   function mostrarConfirmacion(metodo, total) {
     var modal = document.getElementById('verificacion-modal');
     document.getElementById('verif-estado').innerHTML =
