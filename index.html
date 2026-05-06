@@ -1220,29 +1220,130 @@ footer a { color: var(--accent); text-decoration: none; }
 
   function addFromDetail(id) { addToCart(id); closeDetail(); }
 
+  // =============================================
+  // STOCK MÁXIMO POR PRODUCTO
+  // Cambia estos valores según tu inventario real
+  // =============================================
+  var STOCK = {
+    1: 5,  // Polilla Tramposa
+    2: 5,  // Stacking Fun
+    3: 5,  // 5 Sentidos
+    4: 5,  // Anger Management
+    5: 5,   // Bloques Lógicos
+    6: 5,   // Kit Científico
+    7: 8,   // Rompecabezas 3D
+    8: 10,  // Arcilla Mágica
+    9: 8,   // Abecedario Magnético
+    10: 6,  // Dominó de Fracciones
+    11: 5,  // Torre de Equilibrio
+    12: 7,  // Cuentos STEM
+  };
+  var MAX_QTY_POR_PRODUCTO = 5; // máximo por producto por pedido
+  var MAX_ITEMS_CARRITO    = 10; // máximo total de items en el carrito
+
   // CARRITO — Solo guarda id, nombre, imgs y qty. NUNCA el precio.
-  // El precio real siempre viene del servidor.
   function addToCart(id) {
-    var p = products.find(function(x){return x.id===id;});
+    var p = products.find(function(x){ return x.id === id; });
     if (!p) return;
-    var ex = cart.find(function(x){return x.id===id;});
+
+    // Validar stock disponible
+    var stockDisponible = STOCK[id] !== undefined ? STOCK[id] : 0;
+    if (stockDisponible <= 0) {
+      showToast('⚠️ ' + p.name + ' sin stock');
+      return;
+    }
+
+    var ex = cart.find(function(x){ return x.id === id; });
+    var qtyActual = ex ? ex.qty : 0;
+
+    // Validar límite por producto
+    if (qtyActual >= MAX_QTY_POR_PRODUCTO) {
+      showToast('⚠️ Máximo ' + MAX_QTY_POR_PRODUCTO + ' unidades por producto');
+      return;
+    }
+
+    // Validar que no supere el stock real
+    if (qtyActual >= stockDisponible) {
+      showToast('⚠️ Solo hay ' + stockDisponible + ' en stock');
+      return;
+    }
+
+    // Validar total de items en el carrito
+    var totalItems = cart.reduce(function(s, x){ return s + x.qty; }, 0);
+    if (totalItems >= MAX_ITEMS_CARRITO) {
+      showToast('⚠️ Máximo ' + MAX_ITEMS_CARRITO + ' items por pedido');
+      return;
+    }
+
     if (ex) {
       ex.qty++;
     } else {
-      // Solo guardamos datos de presentación, NUNCA el precio
       cart.push({
-        id:   p.id,
-        name: p.name,
-        imgs: p.imgs || [],
-        emoji: p.emoji || '🎮',
-        qty:  1,
-        mpLink: p.mpLink || null,
-        // price solo se usa para mostrar en UI, nunca para calcular el total real
+        id:            p.id,
+        name:          p.name,
+        imgs:          p.imgs || [],
+        emoji:         p.emoji || '🎮',
+        qty:           1,
+        mpLink:        p.mpLink || null,
         _displayPrice: p.price,
       });
     }
+
+    saveCart();
     updateCartCount();
-    showToast('✓ '+p.name+' agregado');
+    showToast('✓ ' + p.name + ' agregado');
+  }
+
+  // =============================================
+  // PERSISTENCIA DEL CARRITO — sessionStorage
+  // Se mantiene durante la sesión del navegador
+  // Se limpia al cerrar la pestaña (más seguro que localStorage)
+  // =============================================
+  function saveCart() {
+    try {
+      // Solo guardar datos mínimos necesarios (nunca precios)
+      var cartData = cart.map(function(x){
+        return { id: x.id, qty: x.qty };
+      });
+      sessionStorage.setItem('np_cart', JSON.stringify(cartData));
+    } catch(e) {
+      // Si sessionStorage no está disponible, continuar sin persistencia
+      console.warn('sessionStorage no disponible');
+    }
+  }
+
+  function loadCart() {
+    try {
+      var raw = sessionStorage.getItem('np_cart');
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      if (!Array.isArray(saved)) return;
+      saved.forEach(function(item) {
+        var id  = parseInt(item.id);
+        var qty = parseInt(item.qty);
+        // Validar que el producto existe y los datos son válidos
+        if (!id || isNaN(id) || !qty || isNaN(qty) || qty < 1) return;
+        var p = products.find(function(x){ return x.id === id; });
+        if (!p) return;
+        // Validar contra stock actual
+        var stockDisponible = STOCK[id] !== undefined ? STOCK[id] : 0;
+        var qtyFinal = Math.min(qty, MAX_QTY_POR_PRODUCTO, stockDisponible);
+        if (qtyFinal <= 0) return;
+        cart.push({
+          id:            p.id,
+          name:          p.name,
+          imgs:          p.imgs || [],
+          emoji:         p.emoji || '🎮',
+          qty:           qtyFinal,
+          mpLink:        p.mpLink || null,
+          _displayPrice: p.price,
+        });
+      });
+      updateCartCount();
+    } catch(e) {
+      // Si hay error al cargar, ignorar y empezar con carrito vacío
+      sessionStorage.removeItem('np_cart');
+    }
   }
 
   function updateCartCount() {
@@ -1277,8 +1378,10 @@ footer a { color: var(--accent); text-decoration: none; }
   }
 
   function removeFromCart(id) {
-    cart = cart.filter(function(x){return x.id!==id;});
-    updateCartCount(); renderCartModal();
+    cart = cart.filter(function(x){ return x.id !== id; });
+    saveCart();
+    updateCartCount();
+    renderCartModal();
   }
 
   // =============================================
@@ -1508,8 +1611,9 @@ footer a { color: var(--accent); text-decoration: none; }
   document.getElementById('cart-modal').addEventListener('click',function(e){if(e.target===this)closeCart();});
   document.getElementById('payment-modal').addEventListener('click',function(e){if(e.target===this)closePayment();});
   document.getElementById('detail-modal').addEventListener('click',function(e){if(e.target===this)closeDetail();});
+  document.getElementById('verificacion-modal').addEventListener('click',function(e){if(e.target===this)cerrarVerificacion();});
 
-  // Precarga imágenes del primer producto para velocidad
+  // Precarga imagen del primer producto
   (function(){
     var first = products.find(function(p){ return p.imgs && p.imgs.length > 0; });
     if (first && first.imgs[0]) {
@@ -1519,6 +1623,8 @@ footer a { color: var(--accent); text-decoration: none; }
     }
   })();
 
+  // Cargar carrito guardado de la sesión anterior
+  loadCart();
   renderProducts();
 </script>
 </body>
