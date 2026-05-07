@@ -1035,7 +1035,7 @@ footer a { color: var(--accent); text-decoration: none; }
     filtered.forEach(function(p){
       var thumb = (p.imgs&&p.imgs.length>0) ? p.imgs[0] : null;
       var imgArea = thumb
-        ? '<img src="'+sanitizeUrl(thumb)+'" alt="'+sanitize(p.name)+'" loading="lazy" decoding="async" onclick="openDetail('+parseInt(p.id)+')">'
+        ? '<img src="'+sanitizeUrl(thumb)+'" alt="'+sanitize(p.name)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;cursor:pointer;" onclick="openDetail('+parseInt(p.id)+')">'
         : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+parseInt(p.id)+')">'+sanitize(p.emoji||'🎮')+'</span>';
       html += '<div class="product-card" id="pc-'+parseInt(p.id)+'">'
             + '<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
@@ -1049,23 +1049,6 @@ footer a { color: var(--accent); text-decoration: none; }
             + '<div class="product-price">'+(p.orig?'<small>S/ '+parseInt(p.orig)+'</small>':'')+'S/ '+parseInt(p.price)+'</div>'
             + '<button class="btn-detail" onclick="openDetail('+parseInt(p.id)+')">Ver más →</button>'
             + '</div></div></div>';
-    });
-    grid.innerHTML = html;
-  }
-        ? '<img src="'+thumb+'" alt="'+p.name+'" loading="lazy" decoding="async" onclick="openDetail('+p.id+')">'
-        : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+p.id+')">'+(p.emoji||'🎮')+'</span>';
-      html += '<div class="product-card">'
-        +'<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
-        +(p.badge?'<span class="badge '+(p.badge==='hot'?'hot':'new')+'">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>':'')
-        +imgArea+'</div>'
-        +'<div class="product-info">'
-        +'<div class="product-ages">⏱ '+p.ages+' &nbsp;·&nbsp; 👥 '+p.players+'</div>'
-        +'<div class="product-name">'+p.name+'</div>'
-        +'<div class="product-desc">'+p.desc+'</div>'
-        +'<div class="product-footer">'
-        +'<div class="product-price">'+(p.orig?'<small>S/ '+p.orig+'</small>':'')+'S/ '+p.price+'</div>'
-        +'<button class="btn-detail" onclick="openDetail('+p.id+')">Ver más →</button>'
-        +'</div></div></div>';
     });
     grid.innerHTML = html;
   }
@@ -1135,7 +1118,7 @@ footer a { color: var(--accent); text-decoration: none; }
                 + '<div class="product-img" style="background:' + getBg(p.cat) + ';position:relative;overflow:hidden;">'
                 + (p.badge ? '<span class="badge ' + (p.badge === 'hot' ? 'hot' : 'new') + '">' + (p.badge === 'hot' ? '🔥 Popular' : '🆕 Nuevo') + '</span>' : '')
                 + (thumb
-                  ? '<img src="' + sanitizeUrl(thumb) + '" alt="' + sanitize(p.name) + '" loading="lazy" decoding="async" onclick="openDetail(' + parseInt(p.id) + ')">'
+                  ? '<img src="' + sanitizeUrl(thumb) + '" alt="' + sanitize(p.name) + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;cursor:pointer;" onclick="openDetail(' + parseInt(p.id) + ')">'
                   : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail(' + parseInt(p.id) + ')">' + sanitize(p.emoji || '🎮') + '</span>')
                 + '</div>'
                 + '<div class="product-info">'
@@ -1177,27 +1160,27 @@ footer a { color: var(--accent); text-decoration: none; }
 
     var gal = '<div class="dm-gallery">';
     if (hasImgs) {
-      gal += '<div class="dm-main-img"><img src="'+p.imgs[0]+'" id="dm-main-img" alt="'+p.name+'" loading="eager" decoding="async">'
+      gal += '<div class="dm-main-img"><img src="'+sanitizeUrl(p.imgs[0])+'" id="dm-main-img" alt="'+sanitize(p.name)+'" loading="eager" decoding="async">'
            + '</div>';
       if (total>1) {
         gal += '<div class="dm-thumbs">';
-        for (var i=0;i<total;i++) gal += '<img src="'+p.imgs[i]+'" class="dm-thumb'+(i===0?' dm-thumb-on':'')+'" onclick="dGo('+i+')" alt="" loading="lazy">';
+        for (var i=0;i<total;i++) gal += '<img src="'+sanitizeUrl(p.imgs[i])+'" class="dm-thumb'+(i===0?' dm-thumb-on':'')+'" onclick="dGo('+parseInt(i)+')" alt="'+sanitize(p.name)+' foto '+(i+1)+'" loading="lazy">';
         gal += '</div>';
       }
     } else {
-      gal += '<div class="dm-main-img" style="font-size:5rem;display:flex;align-items:center;justify-content:center;">'+(p.emoji||'🎮')+'</div>';
+      gal += '<div class="dm-main-img" style="font-size:5rem;display:flex;align-items:center;justify-content:center;">'+sanitize(p.emoji||'🎮')+'</div>';
     }
     gal += '</div>';
 
     var info = '<div class="dm-info">'
       +(p.badge?'<span class="badge '+(p.badge==='hot'?'hot':'new')+'" style="position:static;display:inline-block;margin-bottom:8px;">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>':'')
-      +'<h2 class="dm-name">'+p.name+'</h2>'
-      +'<div class="dm-meta"><span>⏱ '+p.ages+'</span><span>👥 '+p.players+'</span></div>'
-      +'<div class="dm-section"><div class="dm-section-title">📖 Descripción</div><p class="dm-text">'+p.desc+'</p></div>'
-      +'<div class="dm-section"><div class="dm-section-title">🧠 Habilidades que desarrolla</div><p class="dm-text">'+p.skills+'</p></div>'
-      +'<div class="dm-price-row">'+(p.orig?'<span class="dm-orig">S/ '+p.orig+'</span>':'')+'<span class="dm-price">S/ '+p.price+'</span></div>'
+      +'<h2 class="dm-name">'+sanitize(p.name)+'</h2>'
+      +'<div class="dm-meta"><span>⏱ '+sanitize(p.ages)+'</span><span>👥 '+sanitize(p.players)+'</span></div>'
+      +'<div class="dm-section"><div class="dm-section-title">📖 Descripción</div><p class="dm-text">'+sanitize(p.desc)+'</p></div>'
+      +'<div class="dm-section"><div class="dm-section-title">🧠 Habilidades que desarrolla</div><p class="dm-text">'+sanitize(p.skills)+'</p></div>'
+      +'<div class="dm-price-row">'+(p.orig?'<span class="dm-orig">S/ '+parseInt(p.orig||0)+'</span>':'')+'<span class="dm-price">S/ '+parseInt(p.price||0)+'</span></div>'
       +'<div class="dm-btns">'
-      +'<button class="btn-primary" onclick="addFromDetail('+p.id+')">🛒 Agregar al carrito</button>'
+      +'<button class="btn-primary" onclick="addFromDetail('+parseInt(p.id)+')">🛒 Agregar al carrito</button>'
       +'</div></div>';
 
     document.getElementById('detail-body').innerHTML = gal + info;
@@ -1208,11 +1191,11 @@ footer a { color: var(--accent); text-decoration: none; }
     dUpdateImg();
   }
 
-  function dGo(i) { detailIdx = i; dUpdateImg(); }
+  function dGo(i) { detailIdx = parseInt(i)||0; dUpdateImg(); }
 
   function dUpdateImg() {
     var img = document.getElementById('dm-main-img');
-    if (img) img.src = detailP.imgs[detailIdx];
+    if (img && detailP.imgs[detailIdx]) img.src = sanitizeUrl(detailP.imgs[detailIdx]);
     document.querySelectorAll('.dm-thumb').forEach(function(t,i){
       t.className = 'dm-thumb'+(i===detailIdx?' dm-thumb-on':'');
     });
@@ -1225,10 +1208,10 @@ footer a { color: var(--accent); text-decoration: none; }
   // Cambia estos valores según tu inventario real
   // =============================================
   var STOCK = {
-    1: 5,  // Polilla Tramposa
-    2: 5,  // Stacking Fun
-    3: 5,  // 5 Sentidos
-    4: 5,  // Anger Management
+    1: 10,  // Polilla Tramposa
+    2: 15,  // Stacking Fun
+    3: 12,  // 5 Sentidos
+    4: 10,  // Anger Management
     5: 5,   // Bloques Lógicos
     6: 5,   // Kit Científico
     7: 8,   // Rompecabezas 3D
@@ -1448,8 +1431,8 @@ footer a { color: var(--accent); text-decoration: none; }
     if (!_pedidoToken) {
       // Fallback si servidor no disponible
       var total = _pedidoTotal || cart.reduce(function(s,x){return s+x.price*x.qty;},0);
-      var items = cart.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
-      window.open('https://wa.me/51936710169?text=Hola Neuro Play! 🎮%0AYa yapé.%0A%0A*Pedido:*%0A'+items+'%0A%0A*Total: S/ '+total+'*','_blank');
+      var items = cart.map(function(x){return encodeURIComponent('• '+sanitize(x.name)+' x'+parseInt(x.qty));}).join('%0A');
+      window.open('https://wa.me/51936710169?text=Hola%20Neuro%20Play!%0AYa%20yap%C3%A9.%0A%0APedido%3A%0A'+items+'%0A%0ATotal%3A%20S%2F%20'+parseInt(total),'_blank','noopener,noreferrer');
       closePayment();
       mostrarConfirmacion('yape', total);
       return;
@@ -1468,7 +1451,7 @@ footer a { color: var(--accent); text-decoration: none; }
         return;
       }
       // Abrir WhatsApp con mensaje generado por el servidor
-      window.open(data.url, '_blank');
+      window.open(sanitizeUrl(data.url), '_blank', 'noopener,noreferrer');
       closePayment();
       mostrarConfirmacion('yape', data.total);
       _pedidoToken = null;
@@ -1482,20 +1465,25 @@ footer a { color: var(--accent); text-decoration: none; }
   // MERCADO PAGO
   // =============================================
   function goToMP() {
-    var conLink = cart.filter(function(x){return x.mpLink;});
-    var sinLink = cart.filter(function(x){return !x.mpLink;});
+    var conLink = cart.filter(function(x){ return x.mpLink; });
+    var sinLink = cart.filter(function(x){ return !x.mpLink; });
 
     if (conLink.length > 0) {
       window._mpPendientes = conLink;
-      conLink.forEach(function(item){ window.open(item.mpLink,'_blank'); });
+      conLink.forEach(function(item){
+        // Validar que el link sea seguro antes de abrir
+        var url = sanitizeUrl(item.mpLink);
+        if (url && url !== '#') window.open(url, '_blank', 'noopener,noreferrer');
+      });
       closePayment();
       mostrarEsperaVerificacion();
     }
 
     if (sinLink.length > 0) {
-      var total = _pedidoTotal || sinLink.reduce(function(s,x){return s+x.price*x.qty;},0);
-      var items = sinLink.map(function(x){return '• '+x.name+' x'+x.qty+' = S/ '+(x.price*x.qty);}).join('%0A');
-      window.open('https://wa.me/51936710169?text=Hola Neuro Play!%0AQuiero pagar por Mercado Pago:%0A'+items+'%0ATotal: S/ '+total,'_blank');
+      var total = _pedidoTotal || sinLink.reduce(function(s,x){ return s+(parseInt(x._displayPrice||0)*parseInt(x.qty||1)); }, 0);
+      var items = sinLink.map(function(x){ return encodeURIComponent('• '+x.name+' x'+x.qty); }).join('%0A');
+      var url = 'https://wa.me/51936710169?text=Hola%20Neuro%20Play!%0AQuiero%20pagar%20por%20Mercado%20Pago%3A%0A'+items+'%0ATotal%3A%20S%2F%20'+parseInt(total);
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
     _pedidoToken = null;
   }
@@ -1519,64 +1507,81 @@ footer a { color: var(--accent); text-decoration: none; }
   function verificarPagoMP() {
     var btn    = document.getElementById('verif-btn');
     var estado = document.getElementById('verif-estado');
-
-    btn.disabled    = true;
+    btn.disabled = true;
     btn.textContent = 'Verificando...';
-    estado.innerHTML = '<div class="verif-spinner"></div><p style="font-weight:700;margin-top:1rem;">Consultando con Mercado Pago...</p>';
 
     var urlParams = new URLSearchParams(window.location.search);
     var paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
 
     if (!paymentId) {
-      paymentId = prompt('Pega aquí el número de pago que aparece en Mercado Pago:');
-    }
-
-    if (!paymentId || isNaN(paymentId)) {
+      // Modal propio en lugar de prompt() nativo
       estado.innerHTML =
-        '<p style="color:#e53;font-weight:700;">❌ No se encontró el ID del pago.<br><small>Contáctanos por WhatsApp.</small></p>'
-        +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 WhatsApp</a>';
+        '<p style="font-weight:700;margin-bottom:0.8rem;">Ingresa el ID de tu pago</p>'
+        +'<input id="payment-id-input" type="number" placeholder="Ej: 123456789" maxlength="20" '
+        +'style="width:100%;border:2px solid #E8E8E8;border-radius:50px;padding:10px 16px;font-family:Nunito,sans-serif;font-size:0.95rem;outline:none;text-align:center;">'
+        +'<p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Lo encuentras en Mercado Pago → Actividad</p>'
+        +'<button onclick="confirmarPaymentId()" class="btn-checkout" style="margin-top:0.8rem;">Verificar →</button>';
       btn.style.display = 'none';
       return;
     }
+    ejecutarVerificacion(paymentId.replace(/\D/g,''), btn, estado);
+  }
 
-    fetch(WEBHOOK_URL + '/verificar-pago/' + paymentId, {
-      headers: { 'Authorization': 'Bearer ' + ADMIN_TOKEN }
+  function confirmarPaymentId() {
+    var input = document.getElementById('payment-id-input');
+    if (!input) return;
+    var val = input.value.toString().replace(/\D/g,'');
+    if (!val || val.length < 5) { input.style.borderColor='#e53'; input.focus(); return; }
+    var btn    = document.getElementById('verif-btn');
+    var estado = document.getElementById('verif-estado');
+    estado.innerHTML = '<div class="verif-spinner"></div><p style="font-weight:700;margin-top:1rem;">Verificando pago...</p>';
+    ejecutarVerificacion(val, btn, estado);
+  }
+
+  function ejecutarVerificacion(paymentId, btn, estado) {
+    var controller = new AbortController();
+    var timeoutId  = setTimeout(function(){ controller.abort(); }, 10000);
+
+    fetch(WEBHOOK_URL + '/verificar-pago/' + encodeURIComponent(paymentId), {
+      headers: { 'Authorization': 'Bearer ' + ADMIN_TOKEN },
+      signal:  controller.signal,
     })
-    .then(function(res){ return res.json(); })
+    .then(function(res){ clearTimeout(timeoutId); if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
     .then(function(data){
       if (data.aprobado) {
         estado.innerHTML =
           '<div style="font-size:3rem;">✅</div>'
           +'<p style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;color:var(--green);margin-top:0.5rem;">¡Pago verificado!</p>'
-          +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+data.monto+' · ID: '+data.id+'</p>'
+          +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+parseInt(data.monto||0)+' · ID: '+sanitize(String(data.id||''))+'</p>'
           +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te contactaremos para coordinar la entrega 🚚</p>';
         btn.style.display = 'none';
-        cart = []; updateCartCount(); _pedidoToken = null;
-        var items = (window._mpPendientes||[]).map(function(x){return '• '+x.name+' = S/ '+x.price;}).join('%0A');
+        cart = []; saveCart(); updateCartCount(); _pedidoToken = null;
+        var items = (window._mpPendientes||[]).map(function(x){ return encodeURIComponent('• '+x.name); }).join('%0A');
         setTimeout(function(){
-          window.open('https://wa.me/51936710169?text=Pago VERIFICADO ✅%0AID: '+data.id+'%0AMonto: S/ '+data.monto+'%0A%0A'+items,'_blank');
+          window.open('https://wa.me/51936710169?text=Pago%20VERIFICADO%20%E2%9C%85%0AID%3A%20'+encodeURIComponent(data.id||'')+'%0AMonto%3A%20S%2F%20'+parseInt(data.monto||0)+'%0A%0A'+items,'_blank','noopener,noreferrer');
         }, 1500);
       } else if (data.estado === 'pending') {
         estado.innerHTML =
           '<div style="font-size:2.5rem;">⏳</div>'
           +'<p style="font-weight:700;margin-top:0.5rem;">Pago pendiente</p>'
           +'<p style="font-size:0.8rem;color:var(--text-muted);">Espera unos minutos e intenta de nuevo.</p>';
-        btn.disabled = false; btn.textContent = 'Verificar de nuevo';
+        if(btn){btn.disabled=false;btn.textContent='Verificar de nuevo';btn.style.display='block';}
       } else {
         estado.innerHTML =
           '<div style="font-size:2.5rem;">❌</div>'
           +'<p style="font-weight:700;color:#e53;margin-top:0.5rem;">Pago no verificado</p>'
-          +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Contactar WhatsApp</a>';
-        btn.style.display = 'none';
+          +'<a href="https://wa.me/51936710169" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 WhatsApp</a>';
+        if(btn) btn.style.display='none';
       }
     })
-    .catch(function(){
+    .catch(function(err){
+      clearTimeout(timeoutId);
       estado.innerHTML =
         '<div style="font-size:2.5rem;">⚠️</div>'
-        +'<p style="font-weight:700;margin-top:0.5rem;">Verificación manual</p>'
-        +'<p style="font-size:0.8rem;color:var(--text-muted);">Envía el comprobante por WhatsApp.</p>'
-        +'<a href="https://wa.me/51936710169" target="_blank" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Enviar comprobante</a>';
-      btn.style.display = 'none';
+        +'<p style="font-weight:700;margin-top:0.5rem;">'+(err.name==='AbortError'?'Tiempo agotado':'Sin conexión')+'</p>'
+        +'<p style="font-size:0.8rem;color:var(--text-muted);">Envía tu comprobante por WhatsApp.</p>'
+        +'<a href="https://wa.me/51936710169" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:0.8rem;background:#25D366;color:#fff;border-radius:50px;padding:8px 18px;text-decoration:none;font-weight:800;font-size:0.85rem;">💬 Enviar comprobante</a>';
+      if(btn) btn.style.display='none';
     });
   }
 
@@ -1584,14 +1589,15 @@ footer a { color: var(--accent); text-decoration: none; }
 
   function mostrarConfirmacion(metodo, total) {
     var modal = document.getElementById('verificacion-modal');
+    var totalSafe = parseInt(total) || 0;
     document.getElementById('verif-estado').innerHTML =
       '<div style="font-size:3rem;">💜</div>'
       +'<p style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;margin-top:0.5rem;">¡Yape enviado!</p>'
-      +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+total+'</p>'
+      +'<p style="font-size:0.85rem;color:var(--text-muted);">Monto: S/ '+totalSafe+'</p>'
       +'<p style="font-size:0.82rem;margin-top:0.5rem;">Te confirmamos tu pedido por WhatsApp en breve 🚀</p>';
     document.getElementById('verif-btn').style.display = 'none';
     modal.classList.add('open');
-    cart = []; updateCartCount();
+    cart = []; saveCart(); updateCartCount();
   }
 
   // UTILIDADES
