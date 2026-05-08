@@ -775,3 +775,31 @@
   // Cargar carrito guardado de la sesión anterior
   loadCart();
   renderProducts();
+
+// ===== EXPONER FUNCIONES AL SCOPE GLOBAL =====
+if (typeof openCart !== 'undefined') window.openCart = openCart;
+if (typeof closeCart !== 'undefined') window.closeCart = closeCart;
+if (typeof openPayment !== 'undefined') window.openPayment = openPayment;
+if (typeof closePayment !== 'undefined') window.closePayment = closePayment;
+if (typeof openDetail !== 'undefined') window.openDetail = openDetail;
+if (typeof closeDetail !== 'undefined') window.closeDetail = closeDetail;
+if (typeof addToCart !== 'undefined') window.addToCart = addToCart;
+if (typeof addFromDetail !== 'undefined') window.addFromDetail = addFromDetail;
+if (typeof removeFromCart !== 'undefined') window.removeFromCart = removeFromCart;
+if (typeof filterCat !== 'undefined') window.filterCat = filterCat;
+if (typeof filterProducts !== 'undefined') window.filterProducts = filterProducts;
+if (typeof filterByAge !== 'undefined') window.filterByAge = filterByAge;
+if (typeof renderProducts !== 'undefined') window.renderProducts = renderProducts;
+if (typeof switchTab !== 'undefined') window.switchTab = switchTab;
+if (typeof confirmYape !== 'undefined') window.confirmYape = confirmYape;
+if (typeof goToMP !== 'undefined') window.goToMP = goToMP;
+if (typeof verificarPagoMP !== 'undefined') window.verificarPagoMP = verificarPagoMP;
+if (typeof cerrarVerificacion !== 'undefined') window.cerrarVerificacion = cerrarVerificacion;
+if (typeof subscribeNL !== 'undefined') window.subscribeNL = subscribeNL;
+if (typeof dGo !== 'undefined') window.dGo = dGo;
+if (typeof dSlide !== 'undefined') window.dSlide = dSlide;
+if (typeof goDot !== 'undefined') window.goDot = goDot;
+if (typeof moveCarr !== 'undefined') window.moveCarr = moveCarr;
+if (typeof showToast !== 'undefined') window.showToast = showToast;
+if (typeof loadCart !== 'undefined') window.loadCart = loadCart;
+if (typeof saveCart !== 'undefined') window.saveCart = saveCart;
