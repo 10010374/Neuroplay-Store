@@ -415,14 +415,14 @@ nav { background: #fff; border-bottom: 2px solid #FDE8DC; padding: 0 2rem; displ
 
 /* EDADES */
 .age-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
-.age-card { border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; }
+.age-card { border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; font-family: inherit; background: none; width: 100%; display: block; }
 .age-card:hover { transform: translateY(-3px); border-color: currentColor; }
 .age-card.orange{background:#FFF0E8;color:var(--primary);}
 .age-card.teal{background:#E8FFFE;color:var(--accent-dark);}
 .age-card.purple{background:#F3EAFF;color:var(--purple);}
 .age-card.green{background:#E8FFF7;color:#0A9E73;}
 .age-emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
-.age-card h4 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 0.3rem; }
+.age-card h4 { font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 900; }
 .age-card p { font-size: 0.78rem; opacity: 0.8; }
 
 /* TESTIMONIOS */
@@ -681,19 +681,19 @@ footer a { color: var(--accent); text-decoration: none; }
   <h2 class="section-title">Elige por <span>Edad</span></h2>
   <p class="section-sub">Cada etapa tiene sus propios desafíos y aprendizajes</p>
   <div class="age-guide">
-    <div class="age-card orange" onclick="filterByAge('0-2')" role="button" style="cursor:pointer" title="Ver juegos para 0-2 años">
+    <button class="age-card orange" onclick="filterByAge('0-2')" title="Ver juegos para 0-2 años">
       <span class="age-emoji">👶</span><h4>0 – 2 años</h4><p>Estimulación sensorial y motricidad</p>
       <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
-    </div>
-    <div class="age-card teal" onclick="filterByAge('3-5')" role="button" style="cursor:pointer" title="Ver juegos para 3-5 años">
+    </button>
+    <button class="age-card teal" onclick="filterByAge(\'3-5\')" title="Ver juegos para 3-5 años">
       <span class="age-emoji">🧒</span><h4>3 – 5 años</h4><p>Imaginación, lenguaje y coordinación</p>
       <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
-    </div>
-    <div class="age-card purple" onclick="filterByAge('6-8')" role="button" style="cursor:pointer" title="Ver juegos para 6-8 años">
+    </button>
+    <button class="age-card purple" onclick="filterByAge(\'6-8\')" title="Ver juegos para 6-8 años">
       <span class="age-emoji">👧</span><h4>6 – 8 años</h4><p>Lógica, lectura y creatividad</p>
       <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
-    </div>
-    <div class="age-card green" onclick="filterByAge('9-12')" role="button" style="cursor:pointer" title="Ver juegos para 9-12 años">
+    </button>
+    <button class="age-card green" onclick="filterByAge(\'9-12\')" title="Ver juegos para 9-12 años">
       <span class="age-emoji">🧑</span><h4>9 – 12 años</h4><p>Pensamiento crítico y ciencias</p>
       <span style="font-size:0.72rem;margin-top:6px;display:block;opacity:0.7;">Ver juegos →</span>
     </div>
@@ -800,8 +800,8 @@ footer a { color: var(--accent); text-decoration: none; }
     <div class="pay-panel active" id="panel-yape">
       <div class="yape-qr-box">
         <img src="qr_yape.jpeg" alt="QR Yape Neuro Play" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=936710169&bgcolor=F8F0FF&color=7B2FBE'">
-        <div class="yape-qr-info">
-          <div class="yape-number">936 710 169</div>
+        <div class="yape-qr-info" aria-label="Información de pago Yape">
+          <div class="yape-number" aria-label="Número Yape">936 710 169</div>
           <div class="yape-hint">Escanea el QR o busca el número</div>
         </div>
       </div>
