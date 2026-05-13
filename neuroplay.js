@@ -178,8 +178,8 @@
     filtered.forEach(function(p){
       var thumb = (p.imgs&&p.imgs.length>0) ? p.imgs[0] : null;
       var imgArea = thumb
-        ? '<img src="'+sanitizeUrl(thumb)+'" alt="'+sanitize(p.name)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;cursor:pointer;" onclick="openDetail('+parseInt(p.id)+')">'
-        : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail('+parseInt(p.id)+')">'+sanitize(p.emoji||'🎮')+'</span>';
+        ? '<button class="product-img-btn" onclick="openDetail('+parseInt(p.id)+')" aria-label="Ver detalle de '+sanitize(p.name)+'"><img src="'+sanitizeUrl(thumb)+'" alt="'+sanitize(p.name)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"></button>'
+        : '<button class="product-img-btn" onclick="openDetail('+parseInt(p.id)+')" aria-label="Ver detalle de '+sanitize(p.name)+'"><span style="font-size:4rem;">'+sanitize(p.emoji||'🎮')+'</span></button>';
       html += '<div class="product-card" id="pc-'+parseInt(p.id)+'">'
             + '<div class="product-img" style="background:'+getBg(p.cat)+';position:relative;overflow:hidden;">'
             + (p.badge ? '<span class="badge '+(p.badge==='hot'?'hot':'new')+'">'+(p.badge==='hot'?'🔥 Popular':'🆕 Nuevo')+'</span>' : '')
@@ -261,8 +261,8 @@
                 + '<div class="product-img" style="background:' + getBg(p.cat) + ';position:relative;overflow:hidden;">'
                 + (p.badge ? '<span class="badge ' + (p.badge === 'hot' ? 'hot' : 'new') + '">' + (p.badge === 'hot' ? '🔥 Popular' : '🆕 Nuevo') + '</span>' : '')
                 + (thumb
-                  ? '<img src="' + sanitizeUrl(thumb) + '" alt="' + sanitize(p.name) + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;cursor:pointer;" onclick="openDetail(' + parseInt(p.id) + ')">'
-                  : '<span style="font-size:4rem;cursor:pointer;" onclick="openDetail(' + parseInt(p.id) + ')">' + sanitize(p.emoji || '🎮') + '</span>')
+                  ? '<button class="product-img-btn" onclick="openDetail(' + parseInt(p.id) + ')" aria-label="Ver detalle de '+sanitize(p.name)+'"><img src="' + sanitizeUrl(thumb) + '" alt="' + sanitize(p.name) + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"></button>'
+                  : '<button class="product-img-btn" onclick="openDetail(' + parseInt(p.id) + ')" aria-label="Ver detalle de '+sanitize(p.name)+'"><span style="font-size:4rem;">'+sanitize(p.emoji||'🎮')+'</span></button>')
                 + '</div>'
                 + '<div class="product-info">'
                 + '<div class="product-ages">⏱ ' + sanitize(p.ages) + '</div>'
@@ -307,7 +307,7 @@
            + '</div>';
       if (total>1) {
         gal += '<div class="dm-thumbs">';
-        for (var i=0;i<total;i++) gal += '<img src="'+sanitizeUrl(p.imgs[i])+'" class="dm-thumb'+(i===0?' dm-thumb-on':'')+'" onclick="dGo('+parseInt(i)+')" alt="'+sanitize(p.name)+' foto '+(i+1)+'" loading="lazy">';
+        for (var i=0;i<total;i++) gal += '<button class="dm-thumb-btn" onclick="dGo('+parseInt(i)+')" aria-label="Ver imagen '+(i+1)+' de '+sanitize(p.name)+'"><img src="'+sanitizeUrl(p.imgs[i])+'" class="dm-thumb'+(i===0?' dm-thumb-on':'')+'" alt="'+sanitize(p.name)+' foto '+(i+1)+'" loading="lazy"></button>';
         gal += '</div>';
       }
     } else {
@@ -803,3 +803,17 @@ if (typeof moveCarr !== 'undefined') window.moveCarr = moveCarr;
 if (typeof showToast !== 'undefined') window.showToast = showToast;
 if (typeof loadCart !== 'undefined') window.loadCart = loadCart;
 if (typeof saveCart !== 'undefined') window.saveCart = saveCart;
+
+// =============================================
+// MANEJADOR DE ERROR DEL QR DE YAPE
+// Si no carga qr_yape.jpeg usa el QR generado
+// =============================================
+document.addEventListener('DOMContentLoaded', function() {
+  var qrImg = document.getElementById('qr-yape-img');
+  if (qrImg) {
+    qrImg.addEventListener('error', function() {
+      this.src = 'https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=936710169&bgcolor=F8F0FF&color=7B2FBE';
+      this.alt = 'QR generado - Yape 936710169';
+    });
+  }
+});
